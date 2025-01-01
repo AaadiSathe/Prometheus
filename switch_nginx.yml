@@ -1,14 +1,14 @@
-- name: Switch NGINX Configuration for 3.110.134.164
+- name: Switch NGINX Configuration for <ip> 43.204.29.107
   hosts: localhost
   become: yes
   vars:
-    current_color: "{{ deployment_color }}"  # Passed from Jenkins (either 'blue' or 'green')
+    current_color: "{{ TARGET_ENVIRONMENT }}"  # Passed from Jenkins (either 'blue' or 'green')
 
   tasks:
     - name: Set NGINX configuration for blue-green deployment
       copy:
         content: |
-          # NGINX configuration for 13.126.122.36
+          # NGINX configuration for 13.232.235.186
           # This configuration dynamically routes traffic to the active deployment (blue or green).
           upstream backend {
               {% if current_color == 'green' %}
@@ -24,7 +24,7 @@
               listen 80 default_server;
               listen [::]:80 default_server;
               root /var/www/html;
-              server_name 3.110.130.211;
+              server_name 3.110.130.211;  # Use EC2 instance IP
 
               # Dynamically route to the active deployment container
               location / {
@@ -45,14 +45,14 @@
               location ~ /\.(ht|HT) {
                   deny all;
               }
-              
+
               # Expose NGINX status for Prometheus metrics
               location /nginx_status {
                   stub_status on;
                   access_log off;
                   allow 3.110.130.211;  # Allow Prometheus to access NGINX status on EC2 IP
                   deny all;  # Deny external access
-            }
+              }
           }
         dest: /etc/nginx/sites-available/default
       notify:
