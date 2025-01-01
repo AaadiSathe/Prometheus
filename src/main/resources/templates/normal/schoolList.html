@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>List Of Schools</title>
+
+</head>
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Contact Number</th>
+							<th>Email</th>
+							<th>Address</th>
+							<th th:each="columnKey : ${schools[0].customColumns.keySet()}"
+								th:text="${columnKey}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="school : ${schools}">
+							<td th:text="${school.name}"></td>
+							<td th:text="${school.contactNumber}"></td>
+							<td th:text="${school.email}"></td>
+							<td th:text="${school.address}"></td>
+							<td th:each="columnKey : ${schools[0].customColumns.keySet()}"
+								th:text="${school.customColumns.get(columnKey)}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+
+	</section>
+
+</body>
+</html>

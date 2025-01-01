@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Product</title>   
+</head>
+<body>
+	<section>
+		<style>
+		        /* Body Styling */
+		    /*    body {
+		            font-family: 'Poppins', sans-serif;
+		            background-color: #f4f4f9;
+		            padding: 20px;
+		        } */
+
+		        /* Header Styling */
+		        h2 {
+					margin-top: 5px;
+		            text-align: center;
+		            color: #6a1b9a;
+		            margin-bottom: 20px;
+		        }
+
+		        /* Form Container */
+		        form {
+		            max-width: 600px;
+		            margin: 0 auto;
+		            background-color: white;
+		            padding: 20px;
+		            border-radius: 8px;
+		            box-shadow: 4px 8px 16px 2px rgba(0, 0, 0, 0.1);
+		        }
+
+		        /* Form Fields */
+		        label {
+		            display: block;
+		            margin-bottom: 8px;
+		            font-weight: bold;
+		            color: #6a1b9a;
+		        }
+
+		        input[type="text"], input[type="number"], textarea {
+		            width: 100%;
+		            padding: 10px;
+		            margin-bottom: 15px;
+		            border: 1px solid #ddd;
+		            border-radius: 5px;
+		            font-size: 16px;
+		            background-color: #f9f9f9;
+		            transition: background-color 0.3s ease;
+		        }
+
+		        input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+		            background-color: #fff;
+		            outline: none;
+		            border-color: #6a1b9a;
+		        }
+
+		        /* Button Styles */
+		        .btn {
+					margin-left: 15px;
+		            background-color: #6a1b9a;
+		            color: white;
+		            padding: 10px 15px;
+		            border: none;
+		            border-radius: 5px;
+		            cursor: pointer;
+		            font-size: 16px;
+		            display: inline-block;
+		            text-align: center;
+		        }
+
+		        .btn:hover {
+		            background-color: #4a148c;
+					color: #fff;
+		        }
+
+		        /* Back to Product List Button */
+		        .back-btn {
+		            background-color: #5e35b1;
+		            margin-top: 10px;
+		            display: inline-block;
+		        }
+
+		        /* Responsive Design */
+		        @media (max-width: 768px) {
+		            form {
+		                padding: 15px;
+		            }
+		            input[type="text"], input[type="number"], textarea {
+		                font-size: 14px;
+		            }
+		        }
+		    </style>
+	
+    <h2>Update Product</h2>
+    
+    <form th:action="@{/user/update-product/{id}(id=${product.id})}" th:object="${product}" method="post">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" th:field="*{productName}" required/>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" th:field="*{price}" required/>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" th:field="*{quantity}" required/>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" th:field="*{category}" required/>
+
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}" required></textarea>
+
+        <button type="submit" class="btn">Update Product</button>
+    </form>
+
+    <!-- Back to Product List Button -->
+    <a href="/user/showProduct" class="btn back-btn">Back to Product List</a>
+	</section>
+</body>
+</html>

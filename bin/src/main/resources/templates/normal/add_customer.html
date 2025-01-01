@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Add Customer</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+	<script th:src="@{/js/dropdown.js}"></script>
+</head>
+
+<body>
+	<section>
+
+		<form th:object="${addcustomer} " method="post" th:action="@{/user/process_customer}" class="signup-form">
+
+			
+				
+
+				<!-- form header -->
+				<div class="form-header">
+					<h1></h1>
+				</div>
+
+				<!-- form body -->
+				<div class="form-body">
+
+
+					<div class="horizontal-group">
+						<div class="form-group left">
+							<label for="firstname" class="label-title"> Name *</label> <input type="text" name="name"
+								id="name" class="form-input" placeholder="enter your name" pattern="[A-Z a-z]+"
+								required />
+						</div>
+						 
+						<div class="form-group left">
+							<label for="firstname" class="label-title"> Company Name *</label> <input type="text"
+								name="companyName" id="companyName" class="form-input mx-2" placeholder="enter your name"
+								pattern="[A-Z a-z]+" required /><br>
+						</div>
+						<div class="form-group right">
+							<label for="email" class="label-title">Email *</label> <input type="email" name="email"
+								id="email" class="form-input" placeholder="enter your email"
+								pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]" required />
+						</div>
+					
+					</br> </br> </br>
+				<div>
+					<div class="horizontal-group">
+						<div class="form-group left">
+							<label for="mobileno" class="label-title">Mobile Number *</label> <input type="text"
+								name="mobileno" id="mobileno" class="form-input"
+								placeholder="enter your 10 digit mobile number" required pattern="[0-9]{10}" />
+						</div>
+
+					</div>
+					
+
+
+
+				</div>
+				</br> </br></br> </br>
+
+
+				<div class="form-group text-center">
+					<span>* required</span>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+
+
+				<!-- form-footer -->
+				<div class="form-footer">
+
+				</div>
+
+
+			</form>
+
+	</section>
+
+</body>
+
+</html>

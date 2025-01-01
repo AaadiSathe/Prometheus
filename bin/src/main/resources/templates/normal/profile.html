@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<div>
+	<!--<section>
+		
+		
+		<div class="col-md-6 offset-md-3">
+
+		<div class="container card vh-200" >
+			<div class="card-body">
+					<div class="container card vh-200">
+		<div class="card-body">
+			<h1 class="text-center"></h1>
+			<table class="table table-sm">
+				<thead>
+					<tr>
+						 <th scope="col">#</th>
+                          <th scope="col">First</th>
+                          <th scope="col">Last</th>
+                          <th scope="col">Handle</th>
+                          <h3>User Profile</h3>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						
+						<th style="font-size: 25px; font-weight: 500;" scope="row">Name</th>
+						<td><span style="font-size: 25px;" th:text="${user.name}"></span></td>
+
+
+					</tr>
+					<tr>
+						<th style="font-size: 25px; font-weight: 500" scope="row">Email</th>
+						<td><span style="font-size: 25px;" th:text="${user.email}"></span></td>
+
+					</tr>
+					<tr>
+						<th style="font-size: 25px; font-weight: 500;">Role</th>
+						<td><span style="font-size: 25px;" th:text="${user.role}"></span></td>
+
+					</tr>
+					<tr>
+						<th style="font-size: 25px; font-weight: 500;" scope="row">About</th>
+						<td><span style="font-size: 25px;" th:text="${user.about}"></span></td>
+
+					</tr>
+					</tr>
+					<tr>
+						<th style="font-size: 25px; font-weight: 500;" scope="row">Active</th>
+						<td><span style="font-size: 25px;" th:text="${user.enabled}"></span></td>
+
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>	
+</section>-->
+				<!--<h1 class="text-center"></h1>
+				<table class="table table-sm">
+					<thead>
+						<tr>
+							 <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							
+							<th style="font-size: 25px; font-weight: 500;" scope="row">Name</th>
+							<td><span style="font-size: 25px;" th:text="${user.name}"></span></td>
+
+
+						</tr>
+						<tr>
+							<th style="font-size: 25px; font-weight: 500" scope="row">Email</th>
+							<td><span style="font-size: 25px;" th:text="${user.email}"></span></td>
+
+						</tr>
+						<tr>
+							<th style="font-size: 25px; font-weight: 500;" scope="row">Role</th>
+							<td><span style="font-size: 25px;" th:text="${user.role}"></span></td>
+
+						</tr>
+						<tr>
+							<th style="font-size: 25px; font-weight: 500;" scope="row">About</th>
+							<td><span style="font-size: 25px;" th:text="${user.about}"></span></td>
+
+						</tr>
+						</tr>
+						<tr>
+							<th style="font-size: 25px; font-weight: 500; " scope="row">Active</th>
+							<td><span style="font-size: 25px;" th:text="${user.enabled}"></span></td>
+
+						</tr>
+
+
+					</tbody>
+				</table>
+			</div>
+		</div>-->
+		
+
+            
+
+		<section style="background-color:orange; background-image: url(/images/bg.webp);">
+			
+<div class="col-md-6 offset-md-3" 
+			 style= "background-position: 20px solid orange;">
+			 
+							
+  
+	  <br>
+	  <br>
+
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p mb">
+          <ol class="breadcrumb mb-0">
+			  
+			 
+			
+			 
+         <!--  <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">User</a></li>-->
+            <li class="breadcrumb-item active" aria-current="page">
+				<img th:src="@{'/icons/gamer.png'}" style="width: 36px;">
+				
+							
+				<b>Hello User</b></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+
+        
+     <!--<div class="col-lg-8">
+        <div class="card mb-4">-->
+		
+          <div class="card-body" style="background-color:  #fff;">
+            <div class="row">
+              <div class="col-sm-3">
+               <b><p class="mb-0">Name</p></b>
+              </div>
+              <div class="col-sm-9">
+				 
+                               <b><p class="mb-0"  th:text="${user.name}"></p></b>
+                            </div>
+                          
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <b><p class="mb-0">Email</p></b>
+              </div>
+              <div class="col-sm-9">
+                <b><p class="mb-0" th:text="${user.email}" ></p></b>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+                <b><p class="mb-0">Role</p></b>
+              </div>
+              <div class="col-sm-9">
+                 <b><p class="mb-0" th:text="${user.role}"></p><b>
+              </div>
+            </div>
+             <hr>
+               <div class="row">
+                            <div class="col-sm-3">
+								<p class="mb-0"> About</p>
+								</div>
+								  <div class="col-sm-9">
+                                <b><p class="mb-0" th:text="${user.about}"></p></b>
+                            </d>
+                        </div>
+            </div>
+            
+            <hr>
+            <div class="row">
+              <div class="col-sm-3">
+              <b><p class="mb-0" style="padding-left: 2px;">Active</p></b>
+              </div>
+              <div class="col-sm-9">
+                 <b><p class="mb-0" style="padding-left: 16px;" th:text="${user.enabled}"></p></b>
+            </div>
+            
+        <hr>
+
+
+
+  <ul class="social-links"style="padding-left: 10px;"> </ul>
+	
+			  <div class="contact-info" style="width: 94%;">
+				  <hr  class="mb-0">
+				  <br>
+				 
+				   <p><span style="padding-left: 8px" ><b>Phone</b></span> (+91)00000-00000</p>
+				   
+				   <hr>
+				   <!--<p style="padding-left: 8px"><b>Email</b> <span th:text="${user.name}"></span></p>-->
+				   
+				   <p><b><span style="padding-left: 8px"><b>Address</b></span> 1234  pune city</b></p>
+				   <hr>
+				   <div class="row">
+              <div class="col-sm-3">
+				   <div class="col-sm-9">
+					   </div>
+				     <a href="https://www.instagram.com"style="padding-left: 220px" >
+		  <i class="fab fa-instagram"></i></a>
+		  
+			  </ul>  
+		  </div> 
+		  </div> 
+		  
+		  <style> 
+			  
+			 .contact-profile { width: 100%; max-width: 300px; background-color: #fff; border-radius: 4px; padding: 20px; margin: 0 auto; text-align: center; } .profile-image { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 10px; } .profile-name { font-size: 20px; font-weight: bold; margin-bottom: 5px; } .position { font-size: 14px; color: #666; margin-bottom: 15px; } .social-links { list-style: none; padding: 0; display: flex; justify-content: center; margin-bottom: 15px; } .social-links li { margin: 0 5px; } .social-links a { color: #333; font-size: 20px; } .contact-info { line-height: 1.5; } .contact-info p { margin-bottom: 5px; } .contact-info span { font-weight: bold; display: inline-block; width: 80px; } </style> <script src="https://kit.fontawesome.com/yourcode.js"></script>
+
+			</div>
+            </div>
+            </div>
+          </div>
+        <br>
+<br>			
+	</section>
+ <!-- Add Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.min.js"></script>
+</div>
+</body>
+
+</html>

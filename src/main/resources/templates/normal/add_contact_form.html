@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	<script th:src="@{/js/dropdown.js}"></script>                    
+</head>
+
+<body>
+	<section>
+		<style>
+			* {
+			    margin: 0;
+			    padding: 0;
+			    box-sizing: border-box;
+			}
+						
+	/*	.p-2{
+				border: 1px solid #EAECF0;
+				margin-top: 10px;
+				margin-left: 10px;
+				box-shadow: 
+				    10px 0px 15px rgba(128, 128, 128, 0.5),  
+				   -10px 0px 15px rgba(128, 128, 128, 0.5), 
+				    0px 10px 15px rgba(128, 128, 128, 0.5),  
+				    0px -10px 15px rgba(128, 128, 128, 0.5); 
+			} */
+			
+			.input-box {
+			    position: relative;
+			    margin-bottom: 3px;
+				margin-left: 20px;
+				margin-top: 10px;
+			}
+
+			.input-box input {
+			    margin-bottom: 1px;
+				width: 400px;
+			    padding: 20px;
+			    font-size: 16px;
+			    border: 1px solid #ccc;
+			    border-radius: 5px;
+			    background: transparent;
+			    outline: none;
+			    transition: 0.3s;
+			}
+
+			.input-box label {
+			    position: absolute;
+			    top: 50%;
+			    left: 25px;
+			    transform: translateY(-50%);
+			    font-size: 16px;
+			    color: #999;
+			    pointer-events: none;
+			    transition: 0.3s;
+			}
+
+			.input-box input:focus ~ label,
+			.input-box input:valid ~ label {
+			    top: -1px;
+			    left: 15px;
+			    font-size: 12px;
+			    color: #7b3fe4;
+			    background: #ffffff;
+			    padding-left: 2px;
+			    padding-right: 2px;
+			}
+
+			.input-box input:focus {
+			    border-color: #7b3fe4;
+			    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+			}
+						
+			.input-group{
+				width: auto !important;
+				padding-left: 2%;
+			}
+			
+			.input-group select{
+				display: flex;
+				margin-top: 10px;
+				margin-left: -7px;
+				margin-bottom: 10px;
+				padding: 12px;
+				width: 300px;		    
+			    font-size: 16px;
+			    border: 1px solid black;
+			    border-radius: 5px;
+			    background: transparent;
+			}
+			
+			.input-group select:focus{
+				border-color: #7b3fe4;
+				box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+			}	
+			
+			.abc{
+				text-align: center;
+				display: block;
+				width: 150px;
+				background-color: #e3362c;
+				color: #fff;
+				padding: 12px;
+				margin-top: 5px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			
+			.abc:hover{
+				background-color: #942af5;
+			}
+			
+			#profileImage{
+				display: none;
+			}	
+			
+			.input-box textarea{
+				margin-bottom: 1px;
+				margin-top: 5px;
+				width: 100%;
+				height: 88%;
+			    padding: 20px;
+				padding-top: 10px;
+			    font-size: 16px;
+			    border: 1px solid #ccc;
+			    border-radius: 5px;
+			    background: transparent;
+			    outline: none;
+			    transition: 0.3s;
+			}
+			
+			.textarea label {
+			    position: absolute;
+			    top: 50%;
+			    left: 10px;
+			    transform: translateY(-50%);
+			    font-size: 16px;
+			    color: #999;
+			    pointer-events: none;
+			    transition: 0.3s;
+			}
+			
+			.input-box textarea:focus ~ label,
+			.input-box textarea:valid ~ label {
+			    top: 2px;
+			    left: 10px;
+			    font-size: 14px;
+				margin-left: 3%;
+			    color: #7b3fe4;
+			    background: #ffffff;
+			    padding-left: 2px;
+			    padding-right: 2px;
+			}		
+			.input-box textarea:focus {
+			    border-color: #7b3fe4;
+			    box-shadow: 0 0 8px rgba(52, 152, 219, 0.3);
+			}
+			
+			.btn{
+ 				background: #0A1329;
+				color: #fff ;				
+			}
+			.btn:hover{
+				background: #6C03C0;
+				color: #fff;
+			}
+				
+			
+		</style>   			
+		<div class="p-2">
+			<div class="text-center"></div>
+			<form action="#" th:object="${contact}" enctype="multipart/form-data" method="post"
+				th:action="@{/user/process_contact}">
+				<div class="row">				
+					<div class="input-box col-md-5">
+	                    <input type="text" class="form-control" name="name" id="name_field" 
+						 oninput="validateName()" pattern="[a-zA-Z]+$+" required>
+	                    <label>Enter Username</label>
+	                </div>
+	                <div class="input-box col-md-5">
+	                    <input type="email" class="form-control" name="email" id="email_field" required>
+	                    <label>Enter E-mail</label>
+	                </div>
+				</div>
+				<div class="row mt-2">
+					<div class="input-box col-md-5">
+	                    <input type="text" class="form-control" name="phone" id="name_field" 
+						pattern="[0-9]{10}" oninput="validatePhone()" required>
+	                    <label>Enter Phone</label>
+	                </div>
+					<div class="input-box col-md-5">
+	                    <input type="text" class="form-control" name="work" id="name_field" 
+						 oninput="validateName()" pattern="[a-zA-Z]+$+" required>
+	                    <label>Enter Profession</label>
+	                </div>
+				</div>			
+				<div class="row mt-2 m-0 p-0 w-100">
+					<div class="input-group col-md-4">
+		                <select id="country" name="country" onchange="populateStates()" required>
+		                    <option value="">Select your country</option>
+		                    <option value="India">India</option>
+		                    <option value="USA">USA</option>
+		                    <option value="Canada">Canada</option>
+		                </select>
+		            </div>
+		            <div class="input-group col-md-4">
+		                <select id="state" name="state" onchange="populateCities()" disabled required>
+		                    <option value="">Select your state</option>
+		                </select>
+		            </div>
+		            <div class="input-group col-md-4">
+		                <select id="city" name="city" disabled required>
+		                    <option value="">Select your city</option>
+		                </select>
+		            </div>					
+				</div>	
+				<div class="row mt-2 m-0 p-0 w-100">
+					<div class=" col-md-3" style="padding-top: 5px; padding-bottom: 20px; padding-left: 10px; display: flex;
+					align-items: center;
+					justify-content: center;">
+					<div>		
+					<img class="" style=" width: 150px; width: 150px; padding-bottom: 10px;" name="addimg" id="addimg"
+								th:src="@{/images/icon.png}" src="#" />
+							<label class="abc" for="profileImage">Upload Image</label>
+							<input type="file" name="profileImage" id="profileImage" onchange="loadFile(event)" style="margin-top: 5px;">
+					</div>
+					</div>				
+					<div class="input-box col-md-9 m-0">				
+					    <textarea id="description" placeholder=""></textarea>
+						<label for="description">Description</label>
+					</div>
+				</div>
+				
+				<div class="container text-center">
+				    <a href="/user/show_contact/0" class="btn btn-success">Add Contact</a>
+				</div>
+                
+
+				<script>
+					function validateName() {
+						var nameInput = document.getElementById("nameInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage0");
+
+						var nameRegex = /^[a-zA-Z]+$/;
+
+						if (nameInput === "") {
+							document.getElementById("validationMessage0").textContent = "Please enter your name.";
+						} else if (!nameRegex.test(nameInput)) {
+							document.getElementById("validationMessage0").textContent = "Only alphabetic characters are allowed for the name.";
+						} else {
+							document.getElementById("validationMessage0").textContent = "";
+						}
+					}
+				</script>
+
+				<script>
+					function validateName1() {
+						var secondNameInput = document
+							.getElementById("secondNameInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage1");
+
+						// Use a regular expression to check if only alphabetic characters are entered
+						var secondRegex = /^[A-Za-z]+$/;
+
+						if (secondNameInput === "") {
+							document.getElementById("validationMessage1").textContent = "Please enter you Nick Name..";
+						}
+						else if (!secondRegex.test(secondNameInput)) {
+							document.getElementById("validationMessage1").textContent = "Only alphabetic characters are allowed for the Nik name.";
+						} else {
+							validationMessage.textContent = ""; // Clear the validation message if the input is valid
+						}
+					}
+				</script>
+
+
+				<script>
+					function validateWorkInput() {
+						var workInput = document.getElementById("workInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage2");
+
+						var workRegex = /^[A-Za-z\s]+$/;
+
+						if (workInput === "") {
+							validationMessage.textContent = "Please enter you work....!";
+						}
+						else if (!workRegex.test(workInput)) {
+							validationMessage.textContent = "Only alphabetic characters are allowed for the Work.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+
+
+				<script>
+					function validateEmail() {
+						var emailInput = document.getElementById("email");
+						var validationMessage = document
+							.getElementById("validationMessage3");
+
+						var emailRegex = /^\S+@\S+\.\S+$/;
+
+						if (emailInput === "") {
+							validationMessage.textContent = "Please enter your email.."
+						}
+						else if (!emailRegex.test(emailInput)) {
+							validationMessage.textContent = "Please enter a valid email address.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+				<script>
+					function validatePhone() {
+						var phoneInput = document
+							.querySelector('input[name="phone"]').value;
+						var validationMessage = document
+							.getElementById("validationMessage4");
+
+						var phoneRegex = /^[0-9]{10}$/;
+
+
+						if (phoneInput === "") {
+							document.getElementById("validationMessage4").textContent = "Please enter your phone number.";
+						} else if (!phoneRegex.test(phoneInput)) {
+							document.getElementById("validationMessage4").textContent = "Please enter a 10-digit phone number.";
+						} else {
+							document.getElementById("validationMessage4").textContent = "";
+						}
+
+					}
+					
+					const stateOptions = {
+					            "India": ["Maharashtra", "Karnataka", "Tamil Nadu"],
+					            "USA": ["California", "Texas", "New York"],
+					            "Canada": ["Ontario", "Quebec", "British Columbia"]
+					        };
+
+					        const cityOptions = {
+					            "Maharashtra": ["Mumbai", "Pune", "Nagpur"],
+					            "Karnataka": ["Bangalore", "Mysore", "Mangalore"],
+					            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai"],
+					            "California": ["Los Angeles", "San Francisco", "San Diego"],
+					            "Texas": ["Houston", "Dallas", "Austin"],
+					            "New York": ["New York City", "Buffalo", "Rochester"],
+					            "Ontario": ["Toronto", "Ottawa", "Mississauga"],
+					            "Quebec": ["Montreal", "Quebec City", "Laval"],
+					            "British Columbia": ["Vancouver", "Victoria", "Surrey"]
+					        };
+
+					        function populateStates() {
+					            const country = document.getElementById('country').value;
+					            const state = document.getElementById('state');
+					            const city = document.getElementById('city');
+
+					            state.disabled = false;
+					            city.disabled = true;
+					            city.innerHTML = '<option value="">Select your city</option>';
+					            state.innerHTML = '<option value="">Select your state</option>';
+
+					            if (stateOptions[country]) {
+					                stateOptions[country].forEach(function (s) {
+					                    const option = document.createElement('option');
+					                    option.value = s;
+					                    option.text = s;
+					                    state.appendChild(option);
+					                });
+					            }
+					        }
+
+					        function populateCities() {
+					            const state = document.getElementById('state').value;
+					            const city = document.getElementById('city');
+
+					            city.disabled = false;
+					            city.innerHTML = '<option value="">Select your city</option>';
+
+					            if (cityOptions[state]) {
+					                cityOptions[state].forEach(function (c) {
+					                    const option = document.createElement('option');
+					                    option.value = c;
+					                    option.text = c;
+					                    city.appendChild(option);
+					                });
+					            }
+					        }
+				</script>
+
+
+			</form>
+		</div>
+	</section>
+	<script type="text/javascript">
+	</script>
+</body>
+
+</html>

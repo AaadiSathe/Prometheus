@@ -1,0 +1,1149 @@
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base::Layout(~{::section})">
+<head>
+    <meta charset="ISO-8859-1">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"  crossorigin="anonymous"></script>
+  
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="" th:href="@{/css/styles.css}"/>
+    
+   
+    <title>Add College</title>
+</head>
+<body>
+<section>
+
+    <div class="card mt-5" style="width: 50rem; height: 600px; padding: 20px; margin-left: 200px;">
+        <div class="card-header">
+            <h5 class="card-title text-center">Add College</h5>
+        </div>
+     
+     <div > 
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectColumnsModal"
+style=" position: absolute;
+            top: 100;
+            right: 0;
+            margin: 10px;
+            z-index: 1000;
+            font-size: 1.5rem; "
+>
+    + 
+</button>
+
+
+<div class="modal fade" id="selectColumnsModal" tabindex="-1" role="dialog" aria-labelledby="selectColumnsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectColumnsModalLabel">Select and Rename Columns</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="selectColumnsForm">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="col6" id="selectCol6">
+                        <label class="form-check-label" for="selectCol6"><span th:text="${renamedColumns['col6'] ?: 'Column 6'}">Column 6</span></label>
+                        <input type="text" class="form-control mt-2" id="col6Rename" placeholder="Rename Column 6">
+                    </div>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="checkbox" value="col7" id="selectCol7">
+                        <label class="form-check-label" for="selectCol7"><span th:text="${renamedColumns['col7'] ?: 'Column 7'}">Column 7</span></label>
+                        <input type="text" class="form-control mt-2" id="col7Rename" placeholder="Rename Column 7">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveColumnsBtn">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+         
+</div>
+
+        
+
+
+			<div class="card-body" style="padding: 40px; top: 100;">
+        
+       
+
+
+				<form th:action="@{/user/new/addCollege}" method="post"
+                  th:object="${college}" class="row g-3 needs-validation" novalidate>
+                  
+                  <input type="hidden" id="col6Renamed" name="col6Renamed" value="">
+                  <input type="hidden" id="col7Renamed" name="col7Renamed" value=""> 
+                 
+
+
+					<div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom01" class="form-label">Name</label>
+                        <div class="input-group">
+                            <input type="text" name="name" class="form-control"
+                                   id="validationCustom01" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid name (alphabetical letters only).</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom02" class="form-label">Contact Number</label>
+                        <div class="input-group">
+                            <input type="text" name="contactNumber" class="form-control"
+                                   id="validationCustom02" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid 10-digit contact number (digits only).</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom03" class="form-label">Email</label>
+                        <div class="input-group">
+                            <input type="email" name="email" class="form-control"
+                                   id="validationCustom03" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                        <div th:if="${emailExistsError}" class="text-danger">
+                            <span th:text="${emailExistsError}"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom04" class="form-label">Address</label>
+                        <div class="input-group">
+                            <input type="text" name="address" class="form-control"
+                                   id="validationCustom04" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter your address.</div>
+                    </div>
+                </div>
+
+                    
+                    
+					<div class="col-md-6" id="col6Field" style="display: none;">
+						<div class="form-group">
+							<label for="validationCustom05" class="form-label"> <span
+								id="col6Label" th:text="${renamedColumns['col6'] ?: 'Column 6'}">Column
+									6</span>
+							</label> <input type="text" name="col6" class="form-control"
+								id="validationCustom05">
+						</div>
+					</div>
+
+					
+					<div class="col-md-6" id="col7Field" style="display: none;">
+						<div class="form-group">
+							<label for="validationCustom06" class="form-label"> <span
+								id="col7Label" th:text="${renamedColumns['col7'] ?: 'Column 7'}">Column
+									7</span>
+							</label> <input type="text" name="col7" class="form-control"
+								id="validationCustom06">
+						</div>
+					</div>
+
+					<div class="col-12 text-center mt-5 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+                        <div class="invalid-feedback">You must agree before submitting.</div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+            
+            
+             
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+
+            // Custom JavaScript validation for name, contact number, email, and address
+            document.getElementById('validationCustom01').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = /^[A-Za-z]+$/.test(inputValue);
+                toggleValidation(this, isValid);
+            });
+
+            document.getElementById('validationCustom02').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = /^[0-9]{10}$/.test(inputValue);
+                toggleValidation(this, isValid);
+            });
+
+            document.getElementById('validationCustom03').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inputValue);
+                toggleValidation(this, isValid);
+            });
+
+            document.getElementById('validationCustom04').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = inputValue.length > 0;
+                toggleValidation(this, isValid);
+            });
+
+            function toggleValidation(inputElement, isValid) {
+                if (isValid) {
+                    inputElement.classList.remove('is-invalid');
+                    inputElement.classList.add('is-valid');
+                } else {
+                    inputElement.classList.remove('is-valid');
+                    inputElement.classList.add('is-invalid');
+                }
+            }
+        })()
+    </script>
+
+<script>
+        document.getElementById('saveColumnsBtn').addEventListener('click', function() {
+            var col6Checked = document.getElementById('selectCol6').checked;
+            var col7Checked = document.getElementById('selectCol7').checked;
+            
+            
+
+            var col6Rename = document.getElementById('col6Rename').value;
+            var col7Rename = document.getElementById('col7Rename').value;
+
+            if (col6Checked) {
+                document.getElementById('col6Field').style.display = 'block';
+                document.getElementById('col6Label').innerText = col6Rename || 'Column 6';
+                document.getElementById('col6Renamed').value = col6Rename;
+            } else {
+                document.getElementById('col6Field').style.display = 'none';
+            }
+
+            if (col7Checked) {
+                document.getElementById('col7Field').style.display = 'block';
+                document.getElementById('col7Label').innerText = col7Rename || 'Column 7';
+                document.getElementById('col7Renamed').value = col7Rename;
+            } else {
+                document.getElementById('col7Field').style.display = 'none';
+            }
+
+            $('#selectColumnsModal').modal('hide');
+        });
+
+        // Function to remove modal backdrop manually
+        $('#selectColumnsModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+    </script>
+  
+</section>
+</body>
+</html>    -->
+<!-- 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="normal/base::Layout(~{::section})">
+<head>
+    <meta charset="ISO-8859-1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="" th:href="@{/css/styles.css}"/>
+    <title>Add College</title>
+</head>
+<body>
+<section>
+    <div class="card mt-5" style="width: 50rem; height: 750px; padding: 20px; margin-left: 200px;">
+        <div class="card-header">
+            <h5 class="card-title text-center">Add College</h5>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#selectColumnsModal"
+                    style="position: absolute; top: 100; right: 0; margin: 10px; z-index: 1000; font-size: 1.5rem;">
+                +
+            </button>
+            <div class="modal fade" id="selectColumnsModal" tabindex="-1" role="dialog" aria-labelledby="selectColumnsModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="selectColumnsModalLabel">Select and Rename Columns</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="selectColumnsForm">
+                                <div class="form-check" id="col6Div" data-column="col6" th:style="${#maps.containsKey(renamedColumns,'col6') && !#strings.isEmpty(renamedColumns['col6'])} ? 'display:block;' : 'display:none;'" >
+                                    <input class="form-check-input column-checkbox" type="checkbox" value="col6" id="selectCol6"
+                                           th:checked="${#maps.containsKey(renamedColumns, 'col6') && !#strings.isEmpty(renamedColumns['col6'])}">
+                                    <label class="form-check-label" for="selectCol6">
+                                        <span th:text="${renamedColumns['col6'] ?: 'Column 6'}">Column 6</span>
+                                    </label>
+                                    <input type="text" class="form-control mt-2 colRename" id="col6Rename" placeholder="Rename Column 6" 
+                                          th:value="${renamedColumns['col6']}">
+                                </div>
+                                <div class="form-check mt-3" id="col7Div" data-column="col7" th:style="${#maps.containsKey(renamedColumns, 'col7') && !#strings.isEmpty(renamedColumns['col7'])} ? 'display:block;' : 'display:none;'">
+                                    <input class="form-check-input column-checkbox" type="checkbox" value="col7" id="selectCol7"
+                                           th:checked="${#maps.containsKey(renamedColumns, 'col7') && !#strings.isEmpty(renamedColumns['col7'])}"
+                                           >
+                                           
+                                    <label class="form-check-label" for="selectCol7">
+                                        <span th:text="${renamedColumns['col7'] ?: 'Column 7'}">Column 7</span>
+                                    </label>
+                                    <input type="text" class="form-control mt-2 colRename" id="col7Rename" placeholder="Rename Column 7"
+                                           th:value="${renamedColumns['col7']}">
+                                </div>
+									<div class="form-check mt-3" id="col8Div" data-column="col8"
+										th:style="${#maps.containsKey(renamedColumns, 'col8') && !#strings.isEmpty(renamedColumns['col8'])} ? 'display:block;' : 'display:none;'">
+										<input class="form-check-input column-checkbox" type="checkbox" value="col8"
+											id="selectCol8"
+											th:checked="${#maps.containsKey(renamedColumns, 'col8') && !#strings.isEmpty(renamedColumns['col8'])}">
+										<label class="form-check-label" for="selectCol8"> <span
+											th:text="${renamedColumns['col8'] ?: 'Column 8'}">Column
+												8</span>
+										</label> <input type="text" class="form-control mt-2 colRename" id="col8Rename"
+											placeholder="Rename Column 8"
+											th:value="${renamedColumns['col8']}">
+									</div>
+									<div class="form-check mt-3" id="col9Div" data-column="col9"
+										th:style="${#maps.containsKey(renamedColumns, 'col9') && !#strings.isEmpty(renamedColumns['col9'])} ? 'display:block;' : 'display:none;'">
+										<input class="form-check-input column-checkbox" type="checkbox" value="col9"
+											id="selectCol9"
+											th:checked="${#maps.containsKey(renamedColumns, 'col9') && !#strings.isEmpty(renamedColumns['col9'])}">
+										<label class="form-check-label" for="selectCol9"> <span
+											th:text="${renamedColumns['col9'] ?: 'Column 9'}">Column
+												9</span>
+										</label> <input type="text" class="form-control mt-2 colRename" id="col9Rename"
+											placeholder="Rename Column 9"
+											th:value="${renamedColumns['col9']}">
+									</div>
+									<div class="form-check mt-3" id="col10Div" data-column="col10"
+										th:style="${#maps.containsKey(renamedColumns, 'col10') && !#strings.isEmpty(renamedColumns['col10'])} ? 'display:block;' : 'display:none;'">
+										<input class="form-check-input column-checkbox" type="checkbox" value="col10"
+											id="selectCol10"
+											th:checked="${#maps.containsKey(renamedColumns, 'col10') && !#strings.isEmpty(renamedColumns['col10'])}">
+										<label class="form-check-label" for="selectCol10"> <span
+											th:text="${renamedColumns['col10'] ?: 'Column 10'}">Column
+												10</span>
+										</label> <input type="text" class="form-control mt-2 colRename" id="col10Rename"
+											placeholder="Rename Column 10"
+											th:value="${renamedColumns['col10']}">
+									</div>
+								</form>
+
+								<button type="button" class="btn btn-secondary mt-3 add-column-btn"
+									id="addColumnBtn">Add Column</button>
+								<div id="error-message" class="text-danger mt-3"
+									style="display: none;">Maximum limit reached. Cannot add
+									more columns.</div>
+
+							</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveColumnsBtn">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 40px; top: 100;">
+            <form th:action="@{/user/new/addCollege}" method="post"
+                  th:object="${college}" class="row g-3 needs-validation" novalidate>
+               
+                <input type="hidden" id="col6Renamed" name="col6Renamed" th:value="${renamedColumns['col6']}">
+                <input type="hidden" id="col7Renamed" name="col7Renamed" th:value="${renamedColumns['col7']}">
+                <input type="hidden" id="col8Renamed" name="col8Renamed" th:value="${renamedColumns['col8']}">
+                <input type="hidden" id="col9Renamed" name="col9Renamed" th:value="${renamedColumns['col9']}">
+                <input type="hidden" id="col10Renamed" name="col10Renamed" th:value="${renamedColumns['col10']}">
+                  
+                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom01" class="form-label">Name</label>
+                        <div class="input-group">
+                            <input type="text" name="name" class="form-control" id="validationCustom01" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid name (alphabetical letters only).</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom02" class="form-label">Contact Number</label>
+                        <div class="input-group">
+                            <input type="text" name="contactNumber" class="form-control" id="validationCustom02" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid 10-digit contact number (digits only).</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom03" class="form-label">Email</label>
+                        <div class="input-group">
+                            <input type="email" name="email" class="form-control" id="validationCustom03" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                        <div th:if="${emailExistsError}" class="text-danger">
+                            <span th:text="${emailExistsError}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom04" class="form-label">Address</label>
+                        <div class="input-group">
+                            <input type="text" name="address" class="form-control" id="validationCustom04" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter your address.</div>
+                    </div>
+                </div>
+                <div class="col-md-6 colField" id="col6Field" data-column="col6" th:style="${#maps.containsKey(renamedColumns, 'col6') && !#strings.isEmpty(renamedColumns['col6']) ? '' : 'display: none;'}">
+                   <div class="form-group">
+                        <label for="validationCustom06" class="form-label">
+                            <span id="col6Label" th:text="${renamedColumns['col6'] ?: 'Column 6'}">Column 6</span>
+                        </label>
+                        <input type="text" name="col6" class="form-control" id="validationCustom06">
+                    </div>   
+                </div>
+                <div class="col-md-6 colField" id="col7Field" data-column="col7" th:style="${#maps.containsKey(renamedColumns, 'col7') && !#strings.isEmpty(renamedColumns['col7']) ? '' : 'display: none;'}" >
+                      <div class="form-group">
+                        <label for="validationCustom07" class="form-label">
+                            <span id="col7Label" th:text="${renamedColumns['col7'] ?: 'Column 7'}">Column 7</span>
+                        </label>
+                        <input type="text" name="col7" class="form-control" id="validationCustom07">
+                    </div> 
+                </div>
+                <div class="col-md-6" id="col8Field" th:style="${#maps.containsKey(renamedColumns, 'col8') && !#strings.isEmpty(renamedColumns['col8']) ? '' : 'display: none;'}">
+                      <div class="form-group">
+                        <label for="validationCustom08" class="form-label">
+                            <span id="col8Label" th:text="${renamedColumns['col8'] ?: 'Column 8'}">Column 8</span>
+                        </label>
+                        <input type="text" name="col8" class="form-control" id="validationCustom08">
+                    </div> 
+                </div>
+                 <div class="col-md-6" id="col9Field" th:style="${#maps.containsKey(renamedColumns, 'col9') && !#strings.isEmpty(renamedColumns['col9']) ? '' : 'display: none;'}">
+                      <div class="form-group">
+                        <label for="validationCustom09" class="form-label">
+                            <span id="col9Label" th:text="${renamedColumns['col9'] ?: 'Column 9'}">Column 9</span>
+                        </label>
+                        <input type="text" name="col9" class="form-control" id="validationCustom09">
+                    </div> 
+                </div>
+                 <div class="col-md-6" id="col10Field" th:style="${#maps.containsKey(renamedColumns, 'col10') && !#strings.isEmpty(renamedColumns['col10']) ? '' : 'display: none;'}">
+                      <div class="form-group">
+                        <label for="validationCustom10" class="form-label">
+                            <span id="col10Label" th:text="${renamedColumns['col10'] ?: 'Column 10'}">Column 10</span>
+                        </label>
+                        <input type="text" name="col10" class="form-control" id="validationCustom10">
+                    </div> 
+                </div>
+                <div class="col-12 text-center mt-5 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+                        <div class="invalid-feedback">You must agree before submitting.</div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+
+ 
+		<script type="text/javascript">
+    (() => {
+        'use strict';
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        // Custom JavaScript validation for name, contact number, email, and address
+        document.getElementById('validationCustom01').addEventListener('input', function () {
+            const inputValue = this.value.trim();
+            const isValid = /^[A-Za-z]+$/.test(inputValue);
+            toggleValidation(this, isValid);
+        });
+
+        document.getElementById('validationCustom02').addEventListener('input', function () {
+            const inputValue = this.value.trim();
+            const isValid = /^[0-9]{10}$/.test(inputValue);
+            toggleValidation(this, isValid);
+        });
+
+        function toggleValidation(inputElement, isValid) {
+            if (isValid) {
+                inputElement.classList.remove('is-invalid');
+                inputElement.classList.add('is-valid');
+            } else {
+                inputElement.classList.remove('is-valid');
+                inputElement.classList.add('is-invalid');
+            }
+        }
+
+       
+        
+     
+    })();
+ </script>
+ 
+ <script type="text/javascript">
+ 
+ document.addEventListener('DOMContentLoaded',function(){
+	 const addColumnBtn= document.getElementById('addColumnBtn');
+	 const columnDivs = ['col6Div','col7Div','col8Div','col9Div','col10Div'];
+	 const renamedColumns=[
+		 'col6',
+		 'col7',
+		 'col8',
+		 'col9',
+		 'col10'
+	 ];
+	 
+	 let currentColumnIndex = columnDivs.findIndex(colDivId => document.getElementById(colDivId).style.display === 'none');
+	 
+	 if(currentColumnIndex === -1) {
+		 currentColumnIndex = columnDivs.length;
+	 }
+	 
+	 renamedColumns.forEach((column,index)=>{
+		 const columnDiv = document.getElementById(columnDivs[index]);
+		 const isRenamed = columnDiv && columnDiv.style.display === 'block';
+		 if(isRenamed){
+			 currentColumnIndex = Math.max(currentColumnIndex,index+1);
+		 }
+	 });
+	 
+	 addColumnBtn.addEventListener('click',function (){
+		 if(currentColumnIndex < columnDivs.length){
+			 document.getElementById(columnDivs[currentColumnIndex]).style.display='block';
+			 currentColumnIndex++;
+		 }
+		 
+		 if(currentColumnIndex === columnDivs.length) {
+			 document.getElementById('error-message').style.display = 'block';
+			 addColumnBtn.disabled = true;
+		 }
+	 });
+	 
+	 document.getElementById('saveColumnsBtn').addEventListener('click',function (){
+		 
+		 
+		 let form = document.getElementById('selectColumnsForm');
+		 let formData = new FormData(form);
+		 
+		 let renamedColumns = [];
+		 
+		 form.querySelectorAll('.form-check').forEach(function(div){
+			 let checkbox = div.querySelector('input[type="checkbox"]');
+			 let input = div.querySelector('input[type="text"]');
+			 if(checkbox.checked && input.value.trim() !== ''){
+				 console.log("in if loop");
+				 renamedColumns.push({
+					 originalName: checkbox.value,
+					 renamedName: input.value.trim()
+				 });
+			 }else{
+				 console.log("in else loop");
+				 div.querySelector('input[type="text"]').innerText='';
+			 }
+		 });
+		 
+		 // Send the renamed columns data to the backend
+		    fetch('/user/new/saverenamedcolumns', {
+		        method: 'POST',
+		        headers: {
+		            'Content-Type': 'application/json'
+		        },
+		        body: JSON.stringify(renamedColumns)
+		    })
+		    .then(response => {
+		        if (!response.ok) {
+		            throw new Error('Network response was not ok');
+		        }
+		        // Check if the response body is empty
+		        const contentType = response.headers.get('content-type');
+		        if (contentType && contentType.indexOf('application/json') !== -1) {
+		            return response.json();
+		        } else {
+		            return {}; // Return empty object if response body is not JSON
+		        }
+		    })
+		    .then(data => {
+		        console.log('Success:', data);
+		        $('#selectColumnsModal').modal('hide');
+		    })
+		    .catch(error => {
+		        console.error('Error:', error);
+		    });
+		 
+		
+		 
+	 });
+	 
+	 
+	 
+	// Function to remove modal backdrop manually
+     $('#selectColumnsModal').on('hidden.bs.modal', function () {
+         $('.modal-backdrop').remove();
+     });
+	 
+ });
+ 
+ </script>
+
+ 
+ 
+ <script type="text/javascript">
+ 
+ // Handle column renaming and saving
+ document.getElementById('saveColumnsBtn').addEventListener('click', function () {
+     const col6Checked = document.getElementById('selectCol6').checked;
+     const col6RenameValue = document.getElementById('col6Rename').value.trim();
+
+     const col7Checked = document.getElementById('selectCol7').checked;
+     const col7RenameValue = document.getElementById('col7Rename').value.trim();
+     
+     const col8Checked = document.getElementById('selectCol8').checked;
+     const col8RenameValue = document.getElementById('col8Rename').value.trim();
+
+     // Check if a column is renamed before selecting it
+     const col6Renamed = document.getElementById('col6Renamed').value.trim();
+     const col7Renamed = document.getElementById('col7Renamed').value.trim();
+     const col8Renamed = document.getElementById('col8Renamed').value.trim();
+
+     if (col6Renamed) {
+         document.getElementById('selectCol6').checked = true;
+     }
+
+     if (col7Renamed) {
+         document.getElementById('selectCol7').checked = true;
+     }
+     
+     if (col8Renamed) {
+         document.getElementById('selectCol8').checked = true;
+     }
+
+     if (col6Checked && col6RenameValue) {
+         document.getElementById('col6Renamed').value = col6RenameValue;
+         document.getElementById('col6Label').innerText = col6RenameValue;
+         document.getElementById('col6Field').style.display = 'block';
+     } else {
+         document.getElementById('col6Renamed').value = '';
+         document.getElementById('col6Field').style.display = 'none';
+     }
+
+     if (col7Checked && col7RenameValue) {
+         document.getElementById('col7Renamed').value = col7RenameValue;
+         document.getElementById('col7Label').innerText = col7RenameValue;
+         document.getElementById('col7Field').style.display = 'block';
+     } else {
+         document.getElementById('col7Renamed').value = '';
+         document.getElementById('col7Field').style.display = 'none';
+     }
+     
+
+     if (col8Checked && col8RenameValue) {
+         document.getElementById('col8Renamed').value = col8RenameValue;
+         document.getElementById('col8Label').innerText = col8RenameValue;
+         document.getElementById('col8Field').style.display = 'block';
+     } else {
+         document.getElementById('col8Renamed').value = '';
+         document.getElementById('col8Field').style.display = 'none';
+     }
+
+     $('#selectColumnsModal').modal('hide');
+ });
+ 
+//Function to remove modal backdrop manually
+ $('#selectColumnsModal').on('hidden.bs.modal', function () {
+     $('.modal-backdrop').remove();
+ });
+ </script>
+  
+
+
+
+
+	</section>
+</body>
+</html>  
+ -->
+ <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+    <meta charset="ISO-8859-1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="" th:href="@{/css/styles.css}"/>
+    <title>Add College</title>
+</head>
+<body>
+<section>
+    <div class="card mt-5" style="width: 50rem; height: 850px; padding: 20px; margin-left: 200px;">
+        <div class="card-header">
+            <h5 class="card-title text-center">Add College</h5>
+        </div>
+			<div>
+				<button type="button" class="btn btn-primary"  id="fetchDataBtn" data-toggle="modal"
+					data-target="#selectColumnsModal"
+					style="position: absolute; top: 100; right: 0; margin: 10px; z-index: 1000; font-size: 1.5rem;">
+					+</button>
+				<div class="modal fade" id="selectColumnsModal" tabindex="-1"
+					role="dialog" aria-labelledby="selectColumnsModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="selectColumnsModalLabel">Select
+									and Rename Columns</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="selectColumnsForm" class="d-flex flex-wrap"></form>
+
+								<button type="button"
+									class="btn btn-secondary mt-3 add-column-btn" id="addColumnBtn">Add
+									Column</button>
+								<div id="error-message" class="text-danger mt-3"
+									style="display: none;">Maximum limit reached. Cannot add
+									more columns.</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<button type="button" class="btn btn-primary"
+									id="saveColumnsBtn">Save Changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-body" style="padding: 40px; top: 100;">
+            <form th:action="@{/user/new/addCollege}" method="post" th:object="${college}" class="row g-3 needs-validation" novalidate>
+                <!-- Existing form fields -->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom01" class="form-label">Name</label>
+                        <div class="input-group">
+                            <input type="text" name="name" class="form-control" id="validationCustom01" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid name (alphabetical letters only).</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom02" class="form-label">Contact Number</label>
+                        <div class="input-group">
+                            <input type="text" name="contactNumber" class="form-control" id="validationCustom02" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid 10-digit contact number (digits only).</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom03" class="form-label">Email</label>
+                        <div class="input-group">
+                            <input type="email" name="email" class="form-control" id="validationCustom03" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                        <div th:if="${emailExistsError}" class="text-danger">
+                            <span th:text="${emailExistsError}"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="validationCustom04" class="form-label">Address</label>
+                        <div class="input-group">
+                            <input type="text" name="address" class="form-control" id="validationCustom04" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter your address.</div>
+                    </div>
+                </div>
+                <!-- Dynamic fields will be appended here -->
+                <div id="dynamicFieldsContainer"  class="row g-3"></div>
+                <div class="col-12 text-center mt-5 mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">Agree to terms and conditions</label>
+                        <div class="invalid-feedback">You must agree before submitting.</div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <button class="btn btn-outline-primary" type="submit">Submit form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    
+    <!--  
+    <script type="text/javascript">
+        (() => {
+            'use strict';
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation');
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+
+            // Custom JavaScript validation for name, contact number, email, and address
+            document.getElementById('validationCustom01').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = /^[A-Za-z]+$/.test(inputValue);
+                toggleValidation(this, isValid);
+            });
+
+            document.getElementById('validationCustom02').addEventListener('input', function () {
+                const inputValue = this.value.trim();
+                const isValid = /^[0-9]{10}$/.test(inputValue);
+                toggleValidation(this, isValid);
+            });
+
+            function toggleValidation(inputElement, isValid) {
+                if (isValid) {
+                    inputElement.classList.remove('is-invalid');
+                    inputElement.classList.add('is-valid');
+                } else {
+                    inputElement.classList.remove('is-valid');
+                    inputElement.classList.add('is-invalid');
+                }
+            }
+        })();
+    </script>
+     
+     <script type="text/javascript">
+    let renamedColumns = {}; // Initialize renamedColumns as an empty object
+    let columnCount = 0; // Initialize columnCount
+
+    function initializeModal() {
+        const existingColumns = new Set();
+
+        function fetchColumnCount() {
+            return fetch('/user/new/getallcolumns')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && Object.keys(data).length > 0) {
+                        columnCount = Object.keys(data).length;
+                    } else {
+                        columnCount = 0;
+                    }
+                });
+        }
+
+        function incrementColumnCount() {
+            columnCount++;
+            return columnCount;
+        }
+
+        function addColumnField(originalValue = '', renamedValue = '') {
+            const nextColumnNumber = incrementColumnCount();
+           
+            // Generate unique ID for the checkbox
+    	    const checkboxId = `selectcol${nextColumnNumber}`;
+
+    	    // Check if checkbox with the same ID already exists
+    	    if (existingColumns.has(checkboxId)) {
+    	        console.log(`Skipping column with ID ${checkboxId}, it already exists.`);
+    	        return;
+    	    }
+
+    	    // Add checkbox ID to the set to track it
+    	    existingColumns.add(checkboxId);
+
+
+            const div = document.createElement('div');
+            div.className = 'form-check mt-3';
+            div.id = `col${nextColumnNumber}Div`;
+            div.dataset.column = `col${nextColumnNumber}`;
+
+            const displayName = `Column ${nextColumnNumber}`;
+            const placeholderText = renamedValue || `Rename Column ${nextColumnNumber}`;
+            const originalName = originalValue || `col${nextColumnNumber}`;
+
+            div.innerHTML = `
+                <input class="form-check-input column-checkbox" type="checkbox" value="${originalName}" id="${checkboxId}" 
+                    checked onchange="toggleColumn(this)">
+                <label class="form-check-label" for="${checkboxId}">
+                    <span>${displayName}</span>
+                </label>
+                <input type="text" class="form-control mt-2 colRename" id="$col{nextColumnNumber}Rename" 
+                    placeholder="${placeholderText}" value="${renamedValue}">
+            `;
+
+            document.getElementById('selectColumnsForm').appendChild(div);
+        }
+
+        function toggleColumn(checkbox) {
+           // const columnId = checkbox.value;
+           const columnName = checkbox.value;
+
+            const divId = `${columnId}Div`;
+
+            if (!checkbox.checked) {
+                document.getElementById(divId).remove();
+               // existingColumns.delete(columnId);
+            } else {
+               // renamedColumns[columnId] = document.getElementById(`${columnId}Rename`).value;
+            	renamedColumns[columnName] = document.getElementById(`col${columnName}Rename`).value;
+
+            }
+        }
+
+        document.getElementById('addColumnBtn').addEventListener('click', function () {
+            if (existingColumns.size < 6) {
+                addColumnField();
+            } else {
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+
+        document.getElementById('saveColumnsBtn').addEventListener('click', function() {
+            saveRenamedColumns();
+        });
+
+        function saveRenamedColumns() {
+            let renamedColumnsToSend = [];
+            
+            document.querySelectorAll('.form-check').forEach(function(div) {
+                let checkbox = div.querySelector('input[type="checkbox"]');
+                let input = div.querySelector('input[type="text"]');
+                
+                if (checkbox.checked && input.value.trim() !== '') {
+                    renamedColumnsToSend.push({
+                        originalName: checkbox.value,
+                        renamedName: input.value.trim()
+                    });
+                }
+            });
+
+            fetch('/user/new/saverenamedcolumns', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(renamedColumnsToSend)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to save renamed columns');
+                }
+                console.log('Renamed columns saved successfully');
+                appendRenamedColumns(renamedColumnsToSend);
+                $('#selectColumnsModal').modal('hide');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function appendRenamedColumns(renamedColumns) {
+            const dynamicFieldsContainer = document.getElementById('dynamicFieldsContainer');
+            dynamicFieldsContainer.innerHTML = '';
+            
+            renamedColumns.forEach(column => {
+                const formGroup = document.createElement('div');
+                formGroup.className = 'col-md-6';
+                formGroup.innerHTML = `
+                    <div class="form-group">                                     
+                        <label for="${column.originalName}" class="form-label">${column.renamedName}</label>
+                        <div class="input-group">
+                            <input type="text" name="${column.originalName}" class="form-control" id="${column.originalName}" required>
+                        </div>
+                        <div class="invalid-feedback">Please enter a value for ${column.renamedName}.</div>
+                    </div>
+                `;
+                dynamicFieldsContainer.appendChild(formGroup);
+            });
+        }
+
+        function fetchRenamedColumns() {
+            fetch('/user/new/getallcolumns')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Parsed columns:', data);
+
+                    const columns = Object.keys(data).map(key => ({
+                        originalName: key,
+                        renamedName: data[key]
+                    }));
+
+                    console.log('Transformed columns:', columns);
+
+                    renamedColumns = columns;
+
+                    columns.forEach((column, index) => {
+                        addColumnField(column.originalName, column.renamedName);
+                    });
+                    appendRenamedColumns(columns);
+                })
+                .catch(error => {
+                    console.error('Error fetching renamed columns:', error);
+                });
+        }
+
+        $('#selectColumnsModal').on('hidden.bs.modal', function () {
+            $('.modal-backdrop').remove();
+        });
+
+        document.getElementById('fetchDataBtn').addEventListener('click', function () {
+            fetchColumnCount().then(() => {
+                fetchRenamedColumns();
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializeModal();
+    });
+</script>
+     
+     
+    
+    
+    
+   
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    
+<script type="text/javascript">
+    // Function to fetch renamed columns from the backend
+    function fetchRenamedColumnsAndPopulateModal() {
+    	fetch('/user/new/getallcolumns')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Parsed columns:', data);
+
+            // Transform the map into an array of objects
+            const columns = Object.keys(data).map(key => ({
+                originalName: key,
+                renamedName: data[key]
+            }));
+
+            console.log('Transformed columns:', columns);
+
+            renamedColumns = columns;
+
+            
+            appendRenamedColumns(columns);
+        })
+        .catch(error => {
+            console.error('Error fetching renamed columns:', error);
+        });
+    }
+    
+    function appendRenamedColumns(renamedColumns){
+    	const dynamicFieldsContainer = document.getElementById('dynamicFieldsContainer');
+    	dynamicFieldsContainer.innerHTML = '';
+    	
+    	renamedColumns.forEach(column => {
+             const formGroup = document.createElement('div');
+             formGroup.className = 'col-md-6';
+             formGroup.innerHTML = `
+                 <div class="form-group">
+                     <label for="${column.originalName}" class="form-label">${column.renamedName}</label>
+                     <div class="input-group">
+                         <input type="text" name="${column.originalName}" class="form-control" id="${column.originalName}" required>
+                     </div>
+                     <div class="invalid-feedback">Please enter a value for ${column.renamedName}.</div>
+                 </div>
+             `;
+             dynamicFieldsContainer.appendChild(formGroup);
+         });
+    	
+    }
+
+    // Call the function when the DOM content is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch renamed columns and populate modal
+        fetchRenamedColumnsAndPopulateModal();
+    });
+
+    // Other scripts and event listeners
+</script> -->
+ 
+
+</section>
+</body>
+</html>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,271 @@
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add column</title>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+</head>
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body">
+				<form id="searchForm1" class="form-inline"
+					th:action="@{/user/new/colleges}" method="get">
+					<input name="searchTerm" id="search-college-name"
+						class="form-control mr-sm-2" type="search" placeholder="Search"
+						aria-label="Search">
+						  <input type="hidden" id="pageSizeHidden" name="pageSize"> 
+					<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+						<i class="fas fa-search"></i>
+					</button>
+				</form>  
+
+				<div class="table-responseive" id="collegeTableBody">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Contact Number</th>
+								<th>Address</th>
+								<!-- 
+								<th><span th:text="${renamedColumns['col6']?:'Column 6'}">Column 6</span></th>
+								<th><span th:text="${renamedColumns['col7']?:'Column 7'}">Column 7</span></th>
+								 -->
+								<th th:if="${renamedColumns.containsKey('col1')}"><span
+									th:text="${renamedColumns['col1']}">Column 1</span></th>
+								<th th:if="${renamedColumns.containsKey('col2')}"><span
+									th:text="${renamedColumns['col2']}">Column 2</span></th>
+									<th th:if="${renamedColumns.containsKey('col3')}"><span
+									th:text="${renamedColumns['col3']}">Column 3</span></th>
+									<th th:if="${renamedColumns.containsKey('col4')}"><span
+									th:text="${renamedColumns['col4']}">Column 4</span></th>
+									<th th:if="${renamedColumns.containsKey('col5')}"><span
+									th:text="${renamedColumns['col5']}">Column 5</span></th>
+									
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="college: ${colleges}" class="collegeRow">
+							<td th:text="${college.id}"></td>
+							<td th:text="${college.name}"></td>
+							<td th:text="${college.email}"></td>
+							<td th:text="${college.contactNumber}"></td>
+							<td th:text="${college.address}"></td>
+						<!--  	<td th:text="${college.col6}"></td>
+							<td th:text="${college.col7}"></td>  -->
+
+								<td th:if="${renamedColumns.containsKey('col1')}"
+									th:text="${college.col1}"></td>
+								<td th:if="${renamedColumns.containsKey('col2')}"
+									th:text="${college.col2}"></td>
+									<td th:if="${renamedColumns.containsKey('col3')}"
+									th:text="${college.col3}"></td>
+									<td th:if="${renamedColumns.containsKey('col4')}"
+									th:text="${college.col4}"></td>
+									<td th:if="${renamedColumns.containsKey('col5')}"
+									th:text="${college.col5}"></td>
+
+
+								<td>
+									<button class="btn btn-primary btn-sm edit-btn"
+										data-toggle="modal" data-target="#editCollegeModal">
+										Edit</button> <a th:href="@{'/user/deleteCollege/' + ${college.id}}"
+									class="btn btn-danger btn-sm">Delete</a>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				
+				<div id="paginationContainer" class="pagination-container"
+					th:if="${startPage != null and endPage != null}">
+					<nav aria-label="Page navigation example">
+
+						<ul class="pagination" id="paginationLinks">
+							<li th:if="${currentPage != 0}" class="page-item"><a
+								th:href="@{'/user/new/colleges?page=' + ${currentPage - 1} + '&pageSize=' + ${pageSize}+'&searchTerm=' + ${searchTerm}}"
+								class="page-link" href="#">Previous</a></li>
+
+
+							<li th:each="i: ${#numbers.sequence(startPage, endPage)}"
+								th:classappend="${currentPage == i - 1 ? 'active' : ''}"
+								class="page-item"><a
+								th:href="@{'/user/new/colleges?page=' + ${i == 0 ? 0 : i - 1} + '&pageSize=' + ${pageSize}+'&searchTerm=' + ${searchTerm}}"
+								class="page-link" href="#"> <span th:text="${i}"></span>
+							</a></li>
+
+							<li th:if="${currentPage + 1 < totalPages}" class="page-item">
+								<a
+								th:href="@{'/user/new/colleges?page=' + (${totalPages == 0 ? currentPage : currentPage + 1}) + '&pageSize=' + ${pageSize}+ '&searchTerm=' + ${searchTerm} }"
+								class="page-link" href="#">Next</a>
+							</li>
+
+						</ul>
+
+					</nav>
+				</div>
+
+				<select id="pageSize">
+				
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+				</select>
+				
+				
+				
+			</div>
+		</div>
+		
+		
+		<div class="modal fade" id="editCollegeModal" tabindex="-1"
+			role="dialog" aria-labelledby="editCollegeModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editCollegeModalLabel">Edit
+							College</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form id="editCollegeForm" >
+							<input type="hidden" id="editCollegeId" name="collegeId">
+							<div class="form-group">
+								<label for="editCollegeName">Name</label> <input type="text"
+									class="form-control" id="editCollegeName" name="collegeName">
+							</div>
+							<div class="form-group">
+								<label for="editCollegeContactNumber">Contact Number</label> <input
+									type="text" class="form-control" id="editCollegeContactNumber"
+									name="collegeContactNumber">
+							</div>
+							<div class="form-group">
+								<label for="editCollegeEmail">Email</label> <input type="email"
+									class="form-control" id="editCollegeEmail" name="collegeEmail">
+							</div>
+							<div class="form-group">
+								<label for="editCollegeAddress">Address</label> <input
+									type="text" class="form-control" id="editCollegeAddress"
+									name="collegeAddress">
+							</div>
+							<div class="form-group">
+								<label for="editCol6"><span th:text="${renamedColumns['col6']?:'Column 6'}"></span></label> <input
+									type="text" class="form-control" id="editCol6"
+									name="collegeAddress">
+							</div>
+							<div class="form-group">
+								<label for="editCol7"><span th:text="${renamedColumns['col7']?:'Column 7'}"></span></label> <input
+									type="text" class="form-control" id="editCol7"
+									name="collegeAddress">
+							</div>
+							<button type="submit" id="saveChangesBtn" class="btn btn-primary">Save
+								Changes</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script>
+    $(document).ready(function () {
+        // Event delegation for edit buttons
+        $(document).on('click', '.edit-btn', function () {
+            // Log a message to the console to ensure the event is triggered
+            console.log("Edit button clicked");
+
+            // Populate the corresponding input fields in the modal with the current details
+            var $row = $(this).closest('tr');
+            $('#editCollegeId').val($row.find('td:first-child').text().trim());
+            $('#editCollegeName').val($row.find('td:nth-child(2)').text());
+            $('#editCollegeEmail').val($row.find('td:nth-child(3)').text());
+            $('#editCollegeContactNumber').val($row.find('td:nth-child(4)').text());
+            $('#editCollegeAddress').val($row.find('td:nth-child(5)').text());
+            $('#editCol6').val($row.find('td:nth-child(6)').text());
+            $('#editCol7').val($row.find('td:nth-child(7)').text());
+            
+
+            // Show the modal
+             $('#editCollegeModal').modal('show');
+        });
+
+        // Handle form submission for editing college details
+        $('#editCollegeModal').on('click', '#saveChangesBtn', function (event) {
+           // event.preventDefault();
+            
+            console.log("save changes triggered");
+
+            // Collect data from form
+            var collegeId = $('#editCollegeId').val();
+            var collegeName = $('#editCollegeName').val();
+            var collegeContactNumber = $('#editCollegeContactNumber').val();
+            var collegeEmail = $('#editCollegeEmail').val();
+            var collegeAddress = $('#editCollegeAddress').val();
+            var col6 = $('#editCol6').val();
+            var col7 = $('#editCol7').val();
+
+            // AJAX request to update college details
+            $.ajax({
+                type: 'POST',
+                url: '/user/editCollege/' + collegeId,
+                data: {
+                    name: collegeName,
+                    contactNumber: collegeContactNumber,
+                    email: collegeEmail,
+                    address: collegeAddress,
+                    col6: col6,
+                    col7: col7
+                },
+                success: function (response) {
+                    console.log("Update successful");
+                    // Close the modal
+                     $('#editCollegeModal').modal('hide');
+                    // For example, you can update the specific row in the table with the edited data
+                    var $editedRow = $('td').filter(function () {
+                        return $(this).text() === collegeId;
+                    }).closest('tr');
+                    $editedRow.find('td:nth-child(2)').text(collegeName);
+                    $editedRow.find('td:nth-child(3)').text(collegeEmail);
+                    $editedRow.find('td:nth-child(4)').text(collegeContactNumber);
+                    $editedRow.find('td:nth-child(5)').text(collegeAddress);
+                    $editedRow.find('td:nth-child(6)').text(col6);
+                    $editedRow.find('td:nth-child(7)').text(col7);
+                    
+                   
+                },
+               
+                error: function (xhr, status, error) {
+                    console.error("Update failed:", error);
+                }
+            });
+        });
+    });
+
+    </script> 
+
+
+
+	</section>
+</body>
+</html>   
+
+

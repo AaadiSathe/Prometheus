@@ -1,0 +1,30 @@
+<!-- fragments/search-results.html -->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="(e : ${coworker})">
+            <td th:text="${e.coworkerid}" scope="row">1</td>
+            <td><span th:text="${e.name}"></span></td>
+            <td><a th:href="@{'/user/'+${e.coworkerid}+'/coworker'}"><span th:text="${e.email}"></span></a></td>
+            <td><span th:text="${e.mobileno}"></span></td>
+            <td><span th:text="${e.address}"></span></td>
+            <td>
+                <a th:href="@{'/user/'+${e.coworkerid}+'/deletcoworker'}">
+                    <button class="btn btn-danger btn-sm">Delete</button>
+                </a>
+                <form th:action="@{'/user/'+${e.coworkerid}+'/process_updatecoworker'}" method="Post">
+                    <button class="btn btn-primary btn-sm mt-2">Update</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>

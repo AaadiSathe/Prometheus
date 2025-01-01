@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<section>
+
+		<div class="card">
+			<div class="card-body">
+				<h1 class="text-center"></h1>
+				<div class="search-contact my-4">
+					<input id="search-contact" onkeyup="serachs()" type="text"
+						class="form-control" name="contact_name"
+						placeholder="Search Your Contacts">
+					<div class="serach-result"></div>
+				</div>
+
+				<div>
+
+
+					<form class="form-inline " th:action="@{'/user/show_contact/0'}"
+						method="get">
+						<input name="contact_name" id="search-contact-name"
+							class="form-control mr-sm-2" type="search" placeholder="Search"
+							aria-label="Search">
+						<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+				</div>
+
+
+
+				<div></div>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">id</th>
+								<th scope="col">Name</th>
+								<th scope="col">Email</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="(c:${contacts})">
+								<th th:text="${c.cId}" scope="row">1</th>
+								  <td><img class="profile_image"
+									th:src="@{'/images/'+${c.image == null ? 'icon.png':c.image}}">
+									<span th:text="${c.Name}"></span></td>
+								<td><a th:href="@{'/user/'+${c.cId}+'/contact'}"> <span
+										th:text="${c.email}"></span></a></td>
+								<td th:text="${c.phone}">@mdo</td>
+								<td><a th:href="@{'/user/'+${c.cId}+'/delete'}">
+								<button class="btn btn-danger btn-sm">Delete
+								<form th:action="@{'/user/'+${c.cId}+'/update'}" method="Post">
+								<button class="btn btn-primary btn-sm mt-0">Update</button></button>
+									</form></td></a>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+				<!--    	<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li th:if="${currentPage !=0}" class="page-item"><a
+							th:href="@{'/user/show_contact/'+${currentPage-1}}"
+							class="page-link" href="#">Previous</a></li>
+
+						<li th:classappend="${currentPage==i-1?'active':''}"
+							th:each="i:${#numbers.sequence(totalPages==0?0:1,totalPages)}"
+							class="page-item"><a
+							th:href="@{'/user/show_contact/'+${i==0?0:i-1}}"
+							class="page-link" href="#"><span th:text="${i}"></span></a></li>
+
+						<li
+							th:if="${totalPages==0?currentPage:currentPage+1 != totalPages }"
+							class="page-item"><a
+							th:href="@{'/user/show_contact/'+${totalPages==0?currentPage:currentPage+1}}"
+							class="page-link" href="#">Next</a></li>
+					</ul>
+				</nav>  --> 
+
+
+			 <nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li th:if="${currentPage > 0}" class="page-item">
+            <a th:href="@{'/user/show_contact/' + ${currentPage - 1}}" class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">Previous</span>
+            </a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+            <a th:if="${i < totalPages}" th:href="@{'/user/show_contact/' + ${i}}" class="page-link" href="#"><span th:text="${i + 1}"></span></a>
+        </li>
+
+        <li th:if="${currentPage + 2 < totalPages}" class="page-item">
+            <a th:href="@{'/user/show_contact/' + ${currentPage + 1}}" class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
+
+
+
+
+    
+
+
+			</div>
+		</div>
+
+	</section>
+
+</body>
+
+</html>

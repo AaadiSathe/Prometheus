@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+	<title>Insert title here</title>
+
+</head>
+
+<body class="ho">
+
+	<section>
+		<style>
+		    /* Form container styling */
+		    .signup-form {
+		        background-color: #f9f9f9;
+		        padding: 30px;
+		        border-radius: 10px;
+		        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		        max-width: 700px;
+		        margin: 20px auto;
+		    }
+
+		    /* Form Header */
+		    .form-header h1 {
+		        font-family: 'Roboto', sans-serif;
+		        font-size: 24px;
+		        font-weight: bold;
+		        margin-bottom: 20px;
+		        color: #333;
+		    }
+
+		    /* Label styles */
+		    .label-title {
+		        font-size: 16px;
+		        font-weight: 500;
+		        color: #444;
+		    }
+
+		    /* Input field styles */
+		    .form-control, .form-input1 {
+		        padding: 10px 15px;
+		        font-size: 15px;
+		        border: 1px solid #ddd;
+		        border-radius: 5px;
+		        transition: border-color 0.2s;
+		    }
+
+		    .form-control:focus, .form-input1:focus {
+		        border-color: #007bff;
+		        box-shadow: none;
+		    }
+
+		    /* Button styles */
+		    .btn-primary {
+		        background-color: #007bff;
+		        border-color: #007bff;
+		        padding: 10px 20px;
+		        font-size: 16px;
+		        font-weight: bold;
+		        border-radius: 5px;
+		    }
+
+		    .btn-primary:hover {
+		        background-color: #0056b3;
+		        border-color: #0056b3;
+		    }
+
+		    /* Horizontal group spacing */
+		    .horizontal-group {
+		        display: flex;
+		        justify-content: space-between;
+		        gap: 15px;
+		        margin-bottom: 15px;
+		    }
+
+		    /* Mobile responsiveness */
+		    @media (max-width: 768px) {
+		        .horizontal-group {
+		            flex-direction: column;
+		        }
+		    }
+
+		    /* Date and time input specific styles */
+		    .form-input1 {
+		        width: 100%;
+		        padding: 10px;
+		        font-size: 15px;
+		        border-radius: 5px;
+		        border: 1px solid #ddd;
+		    }
+		</style>
+	    <form th:object="${addstudent}" method="get" th:action="@{/user/show_student/0}" class="signup-form">
+	        
+	        <!-- Form Header -->
+	        <div class="form-header text-center">
+	            <h1>Student Registration Form</h1>
+	        </div>
+
+	        <!-- Form Body -->
+	        <div class="form-body">
+	            
+	            <!-- Name and Email -->
+	            <div class="horizontal-group">
+	                <div class="form-group">
+	                    <label for="firstname" class="label-title">Name *</label>
+	                    <input type="text" name="name" id="firstname" class="form-control" placeholder="Enter your name" required />
+	                </div>
+	                <div class="form-group">
+	                    <label for="email" class="label-title">Email *</label>
+	                    <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required />
+	                </div>
+	            </div>
+
+	            <!-- Mobile Number and Address -->
+	            <div class="horizontal-group">
+	                <div class="form-group">
+	                    <label for="mobileno" class="label-title">Mobile Number *</label>
+	                    <input type="text" name="mobileno" id="mobileno" class="form-control" placeholder="Enter your mobile number" required pattern="[0-9]+" />
+	                </div>
+	                <div class="form-group">
+	                    <label for="address" class="label-title">Address *</label>
+	                    <input type="text" name="address" id="address" class="form-control" placeholder="Enter your address" required />
+	                </div>
+	            </div>
+
+	            <!-- Date and Time -->
+	            <div class="horizontal-group">
+	                <div class="form-group">
+	                    <label for="datetime" class="label-title">Date and Time *</label>
+	                    <input type="datetime-local" name="dateandtime" id="datetime" class="form-input1" value="2023-12-01T14:54" required />
+	                </div>
+	            </div>
+
+	            <!-- Submit Button -->
+	            <div class="form-group text-center mt-4">
+	                <span class="text-muted d-block mb-2">* Required Fields</span>
+	                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+	            </div>
+
+	        </div>
+
+	    </form>
+
+	    <!-- Optional JavaScript for Date/Time Input -->
+	    <script>
+	        const dateControl = document.querySelector('input[type="datetime-local"]');
+	        dateControl.value = "2023-12-01T14:54"; // Correct format for datetime-local
+
+	        dateControl.addEventListener('input', function () {
+	            const selectedDate = new Date(dateControl.value);
+	            const hours = selectedDate.getHours();
+	            const minutes = selectedDate.getMinutes();
+	            const amPM = hours >= 12 ? 'PM' : 'AM';
+	            let formattedTime = hours + ':' + minutes + ' ' + amPM;
+	            dateControl.value = formattedTime;
+	        });
+	    </script>
+	</section>
+</body>
+
+</html>

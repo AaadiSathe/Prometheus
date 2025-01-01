@@ -1,0 +1,84 @@
+
+
+ .form-group {
+	margin-bottom: 1.5rem;
+}
+
+
+.input-group {
+	position: relative;
+}
+
+.input-group i {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	color: transparent;
+opacity:0;
+}
+
+.input-group i.valid-feedback::before {
+	color: green;
+}
+
+.input-group i.invalid-feedback::before {
+	color: red;
+}
+
+
+/* Custom width for the modal */
+        .modal-dialog.modal-lg {
+            max-width: 80%; /* Adjust this value as needed */
+        }
+        
+        #selectColumnsForm {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #selectColumnsForm .form-check {
+            flex: 0 0 18%; /* Adjust the width of the columns as needed */
+            margin-right: 2%;
+            margin-bottom: 1rem;
+        }
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+
+.input-group {
+	position: relative;
+}
+
+.input-group i {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	color: transparent;
+opacity:0;
+}
+
+.input-group i.valid-feedback::before {
+	color: green;
+}
+
+.input-group i.invalid-feedback::before {
+	color: red;
+}
+
+
+/* Custom width for the modal */
+        .modal-dialog.modal-lg {
+            max-width: 80%; /* Adjust this value as needed */
+        }
+        
+        #selectColumnsForm {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #selectColumnsForm .form-check {
+            flex: 0 0 18%; /* Adjust the width of the columns as needed */
+            margin-right: 2%;
+            margin-bottom: 1rem;
+        }

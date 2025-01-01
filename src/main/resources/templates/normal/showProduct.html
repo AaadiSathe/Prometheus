@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+</head>
+<body>
+    <section>
+		<style>
+		        .header-container {
+		            display: flex;
+		            justify-content: space-between;
+		            align-items: center;
+		            margin-top: 10px;
+		            margin-bottom: 10px;
+		        }
+
+		        .filter-container {
+		            margin-right: auto;
+		            margin-left: 500px;
+		        }
+
+		        h2 {
+		            margin-left: 15px;
+		            color: #6a1b9a;
+		        }
+
+		        .add-product-btn {
+		            background-color: #5e35b1;
+		        }
+
+		        table {
+		            width: 100%;
+		            border-collapse: collapse;
+		            margin-left: 5px;
+		            font-size: 18px;
+		            text-align: left;
+		            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+		            background-color: white;
+		            border-radius: 8px;
+		            overflow: hidden;
+		        }
+
+		        th, td {
+		            padding: 8px;
+		            border-bottom: 1px solid #ddd;
+		        }
+
+		        th {
+		            background-color: #6a1b9a;
+		            color: white;
+		            text-transform: uppercase;
+		            letter-spacing: 1px;
+		        }
+
+		        td {
+		            color: #333;
+		        }
+
+		        tr:nth-child(even) {
+		            background-color: #f9f9f9;
+		        }
+
+		        tr:nth-child(odd) {
+		            background-color: #fff;
+		        }
+
+		        tr:hover {
+		            background-color: #f1f1f1;
+		        }
+
+		        .btn {
+		            background-color: #6a1b9a;
+		            color: white;
+		            padding: 8px 12px;
+		            border: none;
+		            border-radius: 5px;
+		            cursor: pointer;
+		            text-decoration: none;
+		            font-size: 14px;
+		        }
+
+		        .btn:hover {
+		            background-color: #4a148c;
+		            color: #fff;
+		        }
+
+		        /* Adjusted pagination styling for centered layout */
+		        .pagination-fixed {
+		            position: fixed;
+		            bottom: 0;
+		            width: 100%;
+		            display: flex;
+		            justify-content: space-between;
+		            align-items: center;
+		            background-color: white;
+		            padding: 10px 15px;
+		            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+		        }
+
+		        /* Center the "Page of" and "Next" elements */
+		        .pagination-centered {
+		            display: flex;
+		           /*   justify-content: center;  without sidebar : 83% and with sidebar 69*/
+		            align-items: center;  
+		            flex-grow: 1;  
+					padding-left: 10px;
+					margin-left: 68%;
+		        }
+
+		        .pagination-fixed select, .pagination-fixed div {
+		            margin-right: 10px; 
+		        } 
+				.btn:not(:disabled):not(.disabled) {
+				    cursor: pointer;
+					margin-left: 5px;
+					margin-right: 5px;
+				}
+				
+		    </style>
+        <div class="header-container">
+            <h2>Product List</h2>
+			<div class="filter-container">
+			    <form class="form-inline" th:action="@{/user/showProduct}" method="get">
+			        <select class="form-select" name="category" onchange="resetPageAndSubmit(this.form)">
+			            <option value="" th:selected="${category == ''}">All Categories</option>
+			            <option value="electronics" th:selected="${category == 'electronics'}">Electronics</option>
+			            <option value="clothing" th:selected="${category == 'clothing'}">Clothing</option>
+			            <option value="books" th:selected="${category == 'books'}">Books</option>
+			            <option value="homeAppliances" th:selected="${category == 'homeAppliances'}">Home Appliances</option>
+			        </select>
+			        <input type="hidden" name="page" th:value="${currentPage}" />
+			        <input type="hidden" name="size" th:value="${pageSize}" />
+			    </form>
+			</div>
+            <a href="/user/addProduct" class="btn add-product-btn">Add Product</a>
+        </div>
+
+        <table>
+			<thead>
+			    <tr>
+			        <th>ID</th>
+			        <th>
+			            Product Name
+			            <a th:href="@{/user/showProduct(page=${currentPage}, size=${pageSize}, sortField='productName', sortDir=${sortField == 'productName' && sortDir == 'asc' ? 'desc' : 'asc'}, category=${category})}">
+			                <span th:text="${sortField == 'productName' && sortDir == 'asc' ? '▲' : '▼'}"></span>
+			            </a>
+			        </th>
+			        <th>
+			            Price
+			            <a th:href="@{/user/showProduct(page=${currentPage}, size=${pageSize}, sortField='price', sortDir=${sortField == 'price' && sortDir == 'asc' ? 'desc' : 'asc'}, category=${category})}">
+			                <span th:text="${sortField == 'price' && sortDir == 'asc' ? '▲' : '▼'}"></span>
+			            </a>
+			        </th>
+			        <th>
+			            Quantity
+			            <a th:href="@{/user/showProduct(page=${currentPage}, size=${pageSize}, sortField='quantity', sortDir=${sortField == 'quantity' && sortDir == 'asc' ? 'desc' : 'asc'}, category=${category})}">
+			                <span th:text="${sortField == 'quantity' && sortDir == 'asc' ? '▲' : '▼'}"></span>
+			            </a>
+			        </th>
+			        <th>
+			            Category
+			            <a th:href="@{/user/showProduct(page=${currentPage}, size=${pageSize}, sortField='category', sortDir=${sortField == 'category' && sortDir == 'asc' ? 'desc' : 'asc'}, category=${category})}">
+			                <span th:text="${sortField == 'category' && sortDir == 'asc' ? '▲' : '▼'}"></span>
+			            </a>
+			        </th>
+			        <th>Description</th>
+			        <th>Actions</th>
+			    </tr>
+			</thead>
+
+
+
+            <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.id}">Id</td>
+                    <td th:text="${product.productName}">Product Name</td>
+                    <td th:text="${product.price}">Price</td>
+                    <td th:text="${product.quantity}">Quantity</td>
+                    <td th:text="${product.category}">Category</td>
+                    <td th:text="${product.description}">Description</td>
+                    <td>
+                        <a th:href="@{/user/update-product/{id}(id=${product.id})}" class="btn">Update</a>
+                        <a th:href="@{/user/delete-product/{id}(id=${product.id})}" class="btn">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+		
+		<form th:action="@{/user/showProduct}" method="get">
+		    <div class="pagination-fixed">
+		        <select id="pageSize" name="size" onchange="this.form.submit()">
+		            <option value="10" th:selected="${pageSize == 10}">10</option>
+		            <option value="20" th:selected="${pageSize == 20}">20</option>
+		            <option value="30" th:selected="${pageSize == 30}">30</option>
+		            <option value="50" th:selected="${pageSize == 50}">50</option>
+		        </select>
+
+		        <!-- Hidden inputs for maintaining sorting across pages -->
+		        <input type="hidden" name="sortField" th:value="${sortField}" />
+		        <input type="hidden" name="sortDir" th:value="${sortDir}" />
+
+		        <div class="pagination-centered">
+		            <a th:if="${currentPage > 0}"
+		               th:href="@{/user/showProduct(page=${currentPage - 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir}, category=${category})}"
+		               class="btn">Previous</a>
+		            <span>Page <span th:text="${currentPage + 1}"></span> of <span th:text="${totalPages}"></span></span>
+		            <a th:if="${currentPage + 1 < totalPages}"
+		               th:href="@{/user/showProduct(page=${currentPage + 1}, size=${pageSize}, sortField=${sortField}, sortDir=${sortDir}, category=${category})}"
+		               class="btn">Next</a>
+		        </div>
+		    </div>
+		</form>
+
+		<script>
+		    // JavaScript to reset the page to 0 and submit the form
+		    function resetPageAndSubmit(form) {
+		        // Set the page input to 0 when the category changes
+		        form.page.value = 0;
+		        form.submit();
+		    }
+		</script>
+    </section>
+</body>
+</html>

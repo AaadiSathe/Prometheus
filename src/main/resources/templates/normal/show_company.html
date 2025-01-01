@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+
+<head>
+	<title></title>
+</head>
+
+<body>
+
+
+	<section>
+
+		<div class="card">
+			<div class="card-body">
+				<h1 class="text-center"></h1>
+
+
+				<div>
+
+
+
+
+					<form class="form-inline " id="searchCompany" th:action="@{'/user/show_company/0'}"
+											method="get">
+											<input name="companyName" id="companyName"
+											class="form-control mr-sm-2" type="search" placeholder="Search"
+											aria-label="Search">
+										<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+											<i class="fas fa-search"></i>
+										</button></button>
+					</form>
+
+					</button></button>
+					</form>
+
+
+				</div>
+
+				<br>
+				<br>
+
+				<div></div>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<!--<th scope="col">id</th>-->
+								<th scope="col">Company name</th>
+								<th scope="col">Chemical Name</th>
+								<th scope="col">assigned by</th>
+								<th scope="col">manufactoring date</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="(c:${company})">
+
+
+								<td><a th:href="@{'/user/'+${c.id}+'/company'}"> <span
+											th:text="${c.companyName}"></span></a></td>
+								<td th:text="${c.chemicalName}">@mdo</td>
+								<td th:text="${c.assignedBy}">@mdo</td>
+								<td th:text="${c.manufacturerDate}">@mdo</td>
+								<td><a th:href="@{'/user/'+${c.id}+'/deleteCompany'}"><button
+											class="btn btn-danger btn-sm">Delete</button></a>
+									<form th:action="@{'/user/'+${c.id}+'/update_company'}" method="get">
+										<button class="btn btn-primary btn-sm mt-2">Update</button>
+									</form>
+								</td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+
+
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li th:if="${currentPage > 0}" class="page-item">
+							<a th:href="@{'/user/show_company/' + ${currentPage - 1}}" class="page-link" href="#"
+								aria-label="Previous">
+								<span aria-hidden="true">Previous</span>
+							</a>
+						</li>
+
+						<li th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}"
+							th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+							<a th:if="${i < totalPages}" th:href="@{'/user/show_company/' + ${i}}" class="page-link"
+								href="#"><span th:text="${i + 1}"></span></a>
+						</li>
+
+						<li th:if="${currentPage + 2 < totalPages}" class="page-item">
+							<a th:href="@{'/user/show_company/' + ${currentPage + 1}}" class="page-link" href="#"
+								aria-label="Next">
+								<span aria-hidden="true">Next</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+			</div>
+			<div class="col-2" ></div>
+			<div>
+				<form class="form-inline" id="dropdownForm" action="/user/show_company/0" method="get">
+				    <select name="dropdownvalue" class="form-control mr-sm-2" onchange="handleDropdown(this, 'companyTable')">
+											        <option value="">Select</option>
+											        <option value="1">1</option>
+											        <option value="2">2</option>
+											        <option value="3">3</option>
+											        <option value="4">4</option>
+											        <option value="5">5</option>
+											        <option value="6">6</option>
+											        <option value="7">7</option>
+											        <option value="8">8</option>
+											        <option value="9">9</option>
+											        <option value="10">10</option>
+											  
+											    </select>
+												<input type="submit" class="btn btn-primary" value="Submit">
+										 </form>
+								  </div>
+		
+
+	</section>
+</body>
+
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Employee Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<section>
+
+		<div class="card">
+
+			<section>
+				<div class="vh-100">
+					<div class="card ">
+						<div class="card-body">
+
+							<form class="form-inline" id="searchEmployee" th:action="@{'/user/show_employee/0'}"
+								method="get">
+
+
+								<input name="employee_name" id="search-employee-name" class="form-control mr-sm-2"
+									type="search" placeholder="Search" aria-label="Search">
+								<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+									<i class="fas fa-search"></i>
+								</button>
+							</form>
+
+
+
+
+							<!-- 	<div>
+
+					<form class="form-inline " th:action="@{'/user/show_employee/0'}"
+						method="get">
+						
+						
+						<input name="contact_name" id="search-contact-name"
+							class="form-control mr-sm-2" type="search" placeholder="Search"
+							aria-label="Search">
+						<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+				</div> -->
+
+
+
+
+							<div class="table-responsive" id="employeeTable">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">id</th>
+											<th scope="col">Name</th>
+											<th scope="col">Email</th>
+											<th scope="col">Phone</th>
+											<th scope="col">Address</th>
+											<th scope="col">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="(e:${employees})">
+											<th th:text="${e.employeeid}" scope="row">1</th>
+											<td><span th:text="${e.name}"></span></td>
+											<td><a th:href="@{'/user/'+${e.employeeid}+'/employee'}"> <span
+														th:text="${e.email}"></span></a></td>
+											<!-- <td th:text="${e.mobileno}"></td> -->
+											<td><span th:text="${e.mobileno}"></span></td>
+											<td><span th:text="${e.address}"></span></td>
+											<td><a th:href="@{'/user/'+${e.employeeid}+'/deleteemp'}"><button
+														class="btn btn-danger btn-sm">Delete</button></a>
+												<form th:action="@{'/user/'+${e.employeeid}+'/edit1'}" method="Post">
+													<button class="btn btn-primary btn-sm mt-2">Update</button>
+												</form>
+											</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+
+
+							<div id="paginationContainer" class="pagination-container">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination">
+										<li th:if="${currentPage > 0}" class="page-item">
+											<a th:href="@{'/user/show_employee/' + ${currentPage - 1}}"
+												class="page-link" href="#" aria-label="Previous">
+												<span aria-hidden="true">Previous</span>
+											</a>
+										</li>
+
+										<li th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}"
+											th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+											<a th:if="${i < totalPages}" th:href="@{'/user/show_employee/' + ${i}}"
+												class="page-link" href="#"><span th:text="${i + 1}"></span></a>
+										</li>
+
+										<li th:if="${currentPage + 2 < totalPages}" class="page-item">
+											<a th:href="@{'/user/show_employee' + ${currentPage + 1}}" class="page-link"
+												href="#" aria-label="Next">
+												<span aria-hidden="true">Next</span>
+											</a>
+										</li>
+										</u>
+								</nav>
+							</div>
+						</div>
+
+						<!--   <div></div>
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">id</th>
+							<th scope="col">Name</th>
+							<th scope="col">Email</th>
+							<th scope="col">Phone</th>
+							<th scope="col">Address</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+                
+						<tr th:each="(e:${employees})">
+							<td th:text="${e.employeeid}" scope="row">1</td>
+							<td><span th:text="${e.name}"></span></td>
+							<td><a th:href="@{'/user/'+${e.employeeid}+'/employee'}">
+									<span th:text="${e.email}"></span>
+							</a></td>
+							
+							<td><span th:text="${e.mobileno}"></span></td>
+							<td><span th:text="${e.address}"></span></td>
+							<td><a th:href="@{'/user/'+${e.employeeid}+'/deleteemp'}"><button
+										class="btn btn-danger btn-sm">Delete</button></a>
+								<form th:action="@{'/user/'+${e.employeeid}+'/edit1'}" method="Post">
+									<button class="btn btn-primary btn-sm mt-2">Update</button>
+								</form></td>
+						</tr>
+
+
+					</tbody>
+				</table>
+				</div> -->
+					</div>
+					<div th:if="${employees.empty}">
+						<h5 style="text-align:center ;color:red;">Record not found.</h5>
+					</div>
+
+				</div>
+		</div>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				function handlePagination(event) {
+					event.preventDefault();
+
+					var targetUrl = event.target.getAttribute('href');
+
+					fetchData(targetUrl);
+				}
+
+				function attachPaginationEventListeners() {
+					var paginationLinks = document.querySelectorAll('.pagination a');
+					paginationLinks.forEach(link => {
+						link.addEventListener('click', handlePagination);
+					});
+				}
+
+				function fetchData(url) {
+					fetch(url)
+						.then(response => response.text())
+						.then(data => {
+							var parser = new DOMParser();
+							var htmlDoc = parser.parseFromString(data, 'text/html');
+
+							var tableHtml = htmlDoc.getElementById('employeeTable');
+							var paginationHtml = htmlDoc.getElementById('paginationContainer');
+
+							if (tableHtml && paginationHtml) {
+								document.getElementById('employeeTable').innerHTML = tableHtml.innerHTML;
+								document.getElementById('paginationContainer').innerHTML = paginationHtml.innerHTML;
+
+								attachPaginationEventListeners();
+							} else {
+								console.error("Error: Table or pagination elements not found in fetched content");
+							}
+						})
+						.catch(error => {
+							console.error("Error fetching content:", error);
+						});
+				}
+
+				document.getElementById('searchEmployee').addEventListener('submit', function (event) {
+					console.log("in the methods")
+					handleSubmit.call(this, event, 'employeeTable');
+				});
+
+				attachPaginationEventListeners();
+			});
+
+		</script>
+	</section>
+
+</body>
+<!-- <!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<body>
+	<section>
+
+		<div class="card">
+			<div class="card-body">
+				<h1 class="text-center"></h1>
+				<div class="search-contact my-4">
+					<input id="search-contact" onkeyup="serachs()" type="text"
+						class="form-control" name="contact_name"
+						placeholder="Search Your Contacts">
+					<div class="serach-result"></div>
+				</div>
+
+				<div>
+
+					<form class="form-inline " th:action="@{'/user/show_contact/0'}"
+						method="get">
+						<input name="contact_name" id="search-contact-name"
+							class="form-control mr-sm-2" type="search" placeholder="Search"
+							aria-label="Search">
+						<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+				</div>
+
+
+
+				<div></div>
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">id</th>
+								<th scope="col">Name</th>
+								<th scope="col">Email</th>
+								<th scope="col">Address</th>
+								<th scope="col">Phone</th>
+								<th scope="col">Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="(c:${employee})">
+								<th th:text="${c.employeeid}" scope="row">1</th>
+								
+								<td><span th:text="${c.name}"></span></td>
+								<td><a th:href="@{'/user/'+${c.employeeid}+'/employee'}"> <span th:text="${c.email}"></span></a></td>
+								<td th:text="${c.address}"></td>
+								<td th:text="${c.mobileno}">@mdo</td>
+								
+								<td><a th:href="@{'/user/'+${c.employeeid}+'/delete'}">
+										<button class="btn btn-danger btn-sm">Delete</button>
+									</a>
+									<form th:action="@{'/user/'+${c.employeeid}+'/update'}" method="Post">
+										<button class="btn btn-primary btn-sm mt-2">Update</button>
+									</form></td>
+							</tr>
+
+
+						</tbody>
+					</table>
+				</div>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination">
+						<li th:if="${currentPage !=0}" class="page-item"><a
+							th:href="@{'/user/show_addemployee/'+${currentPage-1}}"
+							class="page-link" href="#">Previous</a></li>
+
+						<li th:classappend="${currentPage==i-1?'active':''}"
+							th:each="i:${#numbers.sequence(totalPages==0?0:1,totalPages)}"
+							class="page-item"><a
+							th:href="@{'/user/show_contact/'+${i==0?0:i-1}}"
+							class="page-link" href="#"><span th:text="${i}"></span></a></li>
+
+						<li
+							th:if="${totalPages==0?currentPage:currentPage+1 != totalPages }"
+							class="page-item"><a
+							th:href="@{'/user/show_contact/'+${totalPages==0?currentPage:currentPage+1}}"
+							class="page-link" href="#">Next</a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+
+	</section>
+
+</body>
+ -->
+
+</html>

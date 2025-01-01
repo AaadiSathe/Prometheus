@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  java-app:
+    image: my-java-app:latest  # Use your pre-built image name or set to 'build' to build from Dockerfile
+    build: 
+      context: .  # Build the Docker image from the current directory
+      dockerfile: Dockerfile  # Specify the Dockerfile if it's not named 'Dockerfile'
+    ports:
+      - "8081:8081"  # Map port 8081 of the host to port 8081 of the container

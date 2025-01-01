@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html  xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})"> 
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+	<div class="card"  >
+		<div class="card-body">
+			
+			<div class="container text-center">
+				<img style="width: 300px; height: 425px;" th:src="@{/images/add_contact_profile.png}"><br>
+				
+				<h1> Start Addding Details In cloud Service</h1>
+				<a th:href="@{/user/add_contact}" class="btn btn-primary mt-4 btn-block">Start Adding</a>
+			</div>
+			
+		</div>
+		</div>
+		 <div style="display: none;" id="map"></div>
+	</section>
+
+</body>
+</html>
+
+<!-- leaflet js  -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Map initialization 
+    var map = L.map('map').setView([14.0860746, 100.608406], 6);
+
+    //osm layer
+    var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+    osm.addTo(map);
+
+    if(!navigator.geolocation) {
+        console.log("Your browser doesn't support geolocation feature!")
+    } else {
+        setInterval(() => {
+            navigator.geolocation.getCurrentPosition(getPosition)
+        }, 5000);
+    }
+
+    var marker, circle;
+
+    function getPosition(position){
+        // console.log(position)
+        var lat = position.coords.latitude
+        var long = position.coords.longitude
+        var accuracy = position.coords.accuracy
+
+        if(marker) {
+            map.removeLayer(marker)
+        }
+
+        if(circle) {
+            map.removeLayer(circle)
+        }
+
+        marker = L.marker([lat, long])
+        circle = L.circle([lat, long], {radius: accuracy})
+
+        var featureGroup = L.featureGroup([marker, circle]).addTo(map)
+
+        map.fitBounds(featureGroup.getBounds())
+
+        console.log("Your coordinate is: Lat: "+ lat +" Long: "+ long+ " Accuracy: "+ accuracy)
+        
+         let url = `http://localhost:8080/map/search/${lat}/${long}`;
+           fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            console.log(data); // Print the response from the server
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+</script>

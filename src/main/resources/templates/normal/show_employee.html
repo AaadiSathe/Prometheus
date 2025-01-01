@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Employee Details</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+	<section>
+		<div class="card">
+			<section>
+				<div class="container-fluid d-flex flex-column" style="min-height: calc(100vh - 52px);">
+					<div class="card flex-fill">
+						<div class="card-body">
+							<div class="d-flex justify-content-between mb-3">
+								<form class="form-inline d-flex" id="searchEmployee"
+									th:action="@{'/user/show_employee/0'}" method="get">
+									<input name="employee_name" id="search-employee-name" class="form-control mr-2"
+										type="search" placeholder="Search" aria-label="Search">
+									<input type="hidden" name="recordsPerPage" th:value="${recordsPerPage}" />
+									<button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+										<i class="fas fa-search"></i>
+									</button>
+								</form>
+
+								<div class="d-flex ms-auto">
+									<form th:action="@{'/user/show_employee/0'}" method="get" class="me-2">
+										<select name="department" id="department-filter" class="form-select"
+											style="width: 150px; height: 28px;" onchange="this.form.submit()">
+											<option value="" disabled selected>Select Department</option>
+											<option value="Technical">Technical</option>
+											<option value="Head">Head</option>
+											<option value="Non-technical">Non-technical</option>
+											<option value="IT">IT</option>
+											<option value="HR">HR</option>
+											<option value="Sales">Sales</option>
+										</select>
+									</form>
+
+									<a th:href="@{'/user/addemployee'}" class="btn btn-success btn-sm p-1" style="height: 28px; margin-left: 11px;">Add
+										Employee</a>
+								</div>
+							</div>
+
+							<div class="table-responsive" id="employeeTable">
+								<table class="table">
+									<thead>
+										<tr>
+											<th scope="col">ID</th>
+											<th scope="col">
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='name', direction='asc', department=${selectedDepartment})}">
+													Name
+													<i class="fas fa-arrow-up"
+														th:classappend="${sort == 'name' && direction == 'asc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='name', direction='desc', department=${selectedDepartment})}">
+													<i class="fas fa-arrow-down"
+														th:classappend="${sort == 'name' && direction == 'desc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+											</th>
+											<th scope="col">
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='department', direction='asc', department=${selectedDepartment})}">
+													Department
+													<i class="fas fa-arrow-up"
+														th:classappend="${sort == 'department' && direction == 'asc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='department', direction='desc', department=${selectedDepartment})}">
+													<i class="fas fa-arrow-down"
+														th:classappend="${sort == 'department' && direction == 'desc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+											</th>
+											<th scope="col">Email</th>
+											<th scope="col">
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='phone', direction='asc', department=${selectedDepartment})}">
+													Phone
+													<i class="fas fa-arrow-up"
+														th:classappend="${sort == 'phone' && direction == 'asc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+												<a style="color: black; text-decoration: none;"
+													th:href="@{/user/show_employee/{page}(page=0, sort='phone', direction='desc', department=${selectedDepartment})}">
+													<i class="fas fa-arrow-down"
+														th:classappend="${sort == 'phone' && direction == 'desc' ? 'text-primary' : 'text-muted'}"></i>
+												</a>
+											</th>
+											<th scope="col">Address</th>
+											<th scope="col">Actions</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr th:each="e : ${employees}">
+											<th th:text="${e.employeeid}" scope="row">1</th>
+											<td><span th:text="${e.name}"></span></td>
+											<td><span th:text="${e.department}"></span></td>
+											<td><a th:href="@{'/user/' + ${e.employeeid} + '/employee'}"><span
+														th:text="${e.email}"></span></a></td>
+											<td><span th:text="${e.mobileno}"></span></td>
+											<td><span th:text="${e.address}"></span></td>
+											<td>
+												<form th:action="@{'/user/' + ${e.employeeid} + '/edit1'}" method="post"
+													style="display:inline;">
+													<button type="submit" title="Edit"
+														style="background: none; border: none;">
+														<i class="fas fa-edit text-primary"></i>
+													</button>
+												</form>
+												<a th:href="@{'/user/' + ${e.employeeid} + '/deleteemp'}"
+													title="Delete">
+													<i class="fas fa-trash text-danger"></i>
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+							<div th:if="${employees.empty}">
+								<h5 style="text-align:center; color:red;">Record not found.</h5>
+							</div>
+						</div>
+					</div>
+
+					<footer class="bg-light text-center text-lg-start mt-auto" style="width: 100%;">
+						<div class="container p-4">
+							<div class="d-flex justify-content-between align-items-center">
+								<div class="d-flex align-items-center mb-3">
+									<form th:action="@{/user/show_employee/{page}(page=${currentPage})}" method="get"
+										class="d-flex align-items-center">
+										<label for="recordsPerPage" class="me-2 mb-0">Records on page:</label>
+										<input type="number" id="recordsPerPage" name="recordsPerPage"
+											placeholder="Enter number" class="form-control" style="width: 75px;"
+											th:value="${recordsPerPage}" min="1">
+										<input type="hidden" name="employee_name" th:value="${employee_name}" />
+										<input type="hidden" name="department" th:value="${selectedDepartment}" />
+										<input type="hidden" name="sort" th:value="${sort}" />
+										<input type="hidden" name="direction" th:value="${direction}" />
+										<button type="submit" class="btn btn-primary p-2" style="height: 36px;">Apply</button>
+									</form>
+								</div>
+
+								<nav aria-label="Page navigation example" class="mt-2">
+									<ul class="pagination justify-content-end">
+										<li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+											<a class="page-link"
+												th:href="@{/user/show_employee/{page}(page=${currentPage > 0 ? currentPage - 1 : 0}, recordsPerPage=${recordsPerPage}, employee_name=${employee_name}, department=${selectedDepartment}, sort=${sort}, direction=${direction})}"
+												aria-label="Previous">
+												<span aria-hidden="true">&laquo; Previous</span>
+											</a>
+										</li>
+
+										<li class="page-item"
+											th:each="i : ${#numbers.sequence(currentPage > 0 ? currentPage - 1 : 0, currentPage + 1 < totalPages ? currentPage + 1 : totalPages - 1)}"
+											th:classappend="${i == currentPage} ? 'active'">
+											<a class="page-link"
+												th:href="@{/user/show_employee/{page}(page=${i}, recordsPerPage=${recordsPerPage}, employee_name=${employee_name}, department=${selectedDepartment}, sort=${sort}, direction=${direction})}"
+												th:text="${i + 1}"></a>
+										</li>
+
+										<li class="page-item"
+											th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+											<a class="page-link"
+												th:href="@{/user/show_employee/{page}(page=${currentPage < totalPages - 1 ? currentPage + 1 : totalPages - 1}, recordsPerPage=${recordsPerPage}, employee_name=${employee_name}, department=${selectedDepartment}, sort=${sort}, direction=${direction})}"
+												aria-label="Next">
+												<span aria-hidden="true">Next &raquo;</span>
+											</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</section>
+		</div>
+	</section>
+</body>
+
+</html>
+

@@ -1,0 +1,275 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+   
+
+}
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling */
+}
+.main{
+    width: 100%;
+    /* height: 100vh; */
+    /* margin-top: 20%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    
+    
+    
+
+}
+.main-row
+{
+    width: 60%;
+    background: linear-gradient(151.29deg, #80D0FF 3.07%, #417DFF 83.1%);
+    margin-bottom: 20px;
+
+
+     
+    /* height: 100%; */
+}
+.main-row-heading{
+font-family: "Montserrat", sans-serif;
+font-size: 50px;
+font-weight: 700;
+line-height: 91.43px;
+color: #FFFFFF;
+margin-left: 75px;
+word-spacing: 5px;
+
+
+
+}
+.main-row-p1{
+    color: #FFFFFF;
+    font-family: "Montserrat", sans-serif;
+
+font-size: 21px;
+font-weight: 500;
+line-height: 30.48px;
+text-align: left;
+margin-left: 75px;
+word-spacing: 5px;
+
+}
+
+.main-row-image img{
+    width: 50%;
+
+}
+.main-row-image{
+     /* display: flex;
+    justify-content: center; */
+    margin-top: 50px; 
+     margin-left: 150px;
+     width: 100%;
+} 
+.main-row-p2
+{
+color: #FFFFFF;
+font-family: "Montserrat", sans-serif;
+font-size: 38px;
+font-weight: 750;
+line-height: 40.48px;
+text-align: left;
+margin-left: 75px;
+word-spacing: 5px;
+
+}
+.main-row-p3{
+color:  #FFFFFFB2;
+
+font-family: "Poppins", sans-serif;
+font-size: 18px;
+font-weight: 500;
+line-height: 18px;
+text-align: left;
+margin-left: 75px;
+margin-top: 50px;
+margin-bottom: 90px;
+
+}
+.break-line {
+    display: block; /* Forces the span to break onto a new line */
+}
+
+.main-row-inner{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    
+    
+}
+
+
+
+.right-section
+{
+    width: 40%;
+    color: #CCCCCC;
+    margin-top: 126px;
+    /* display: flex; */
+    /* align-items: center; 
+    justify-content: center; */
+
+    
+}
+
+h1.right-section-heading
+{
+    width: 50%;
+    margin: 0px 261px ;
+    margin-left: 220px;
+} 
+   
+    
+
+
+.right-section-heading {
+    color: #000000;
+    padding: 12px 2px;
+    margin: 18px 100px;
+}
+
+.right-section-p1
+{
+font-family: "Poppins", sans-serif;
+font-size: 14px;
+font-weight: 400;
+line-height: 18px;
+text-align: center;
+color: #CCCCCC;
+margin-bottom: 20px;
+
+}
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.login-form input {
+    width: 65%;
+    padding: 12px 2px;
+    margin: 18px 109px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.login-form button {
+    width: 65%;
+    background-color: #187bff;
+    color: white;
+    border: none;
+    padding: 12px 2px;
+    margin: 18px 109px;
+    margin-top: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login-form button:hover {
+    background-color: #0056b3;
+}
+.password-container {
+    position: relative; 
+    width: 660px; /* Set a width for your input */
+}
+
+.password-container input {
+    width: 60%; 
+    padding: 12px 2px; /* Add padding to make space for the eye icon */
+    margin: 18px 109px;
+    border: 1px solid #ddd; 
+    border-radius: 6px; 
+    font-size: 14px; /* Adjust font size if needed */
+}
+
+.toggle-password {
+    position: absolute; 
+    right: 178px; 
+    top: 50%; 
+    transform: translateY(-50%); 
+    cursor: pointer; 
+    width: 20px; /* Set width for the eye icon */
+    height: auto; /* Maintain aspect ratio */
+}
+
+
+.forgot-password {
+font-family: Poppins;
+color: #2498DB;
+margin-left: 19%;
+text-decoration: none;
+
+font-size: 12px;
+font-weight: 400;
+line-height: 18px;
+
+
+
+    
+}
+.line{
+    display: flex;
+    justify-content: center;
+}
+hr{
+    width:30%;
+    color: #B3B3B3;
+    height: 2.5px;
+    margin: 10px;
+    
+}
+.social-login {
+    display: flex; 
+    align-items: center; /* Vertically aligns text and icons */
+    justify-content: center; /* Center aligns the whole content */
+    margin-top: 10px;
+}
+
+.social-login span {
+    font-size: 14px;
+    margin-right: 10px; /* Space between the text and icons */
+}
+
+.social-icons {
+    display: flex; /* Display icons in one line */
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons a {
+    margin: 0 10px;
+    border-radius:50%;
+    width: 50px; /* Set a fixed width */
+    height: 50px;
+    padding: 8%;
+    background: #F0F0F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+.signup-text {
+    font-size: 14px;
+    
+    text-align: center;
+    color: #000000;
+    margin: 30px 0;
+    
+}
+
+.signup-text a {
+    color: #187bff;
+    text-decoration: none;
+}

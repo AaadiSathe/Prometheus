@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	<style type="text/css">
+	</style>
+</head>
+
+<body>
+	<section>
+		<div class="card" th:if=${vendor}>
+			<div class="card-body">
+
+				<div class="container ">
+
+					<div class="card" th:if=${vendor}>
+						<div>
+							<div>
+								<table>
+									<thead>
+										<tr>
+											<!-- <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>-->
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Name:</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.name}"></span></td>
+
+
+										</tr>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Mobile:</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.mobile}"></span></td>
+
+										</tr>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Email:</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.email}"></span></td>
+
+										</tr>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Address :</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.address}"></span></td>
+
+										</tr>
+										</tr>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Products :</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.products}"></span>
+											</td>
+
+										</tr>
+										<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Business Type :</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.businessType}"></span>
+											</td>
+										</tr>
+	<tr>
+											<th style="font-size: 25px; font-weight: 500;" scope="row">Date of Registration :</th>
+											<td><span style="font-size: 25px;" th:text="${vendor.dateOfRegistration}"></span>
+											</td>
+										</tr>
+
+									</tbody>
+
+
+								</table>
+
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+	</section>
+
+</body>
+
+</html>

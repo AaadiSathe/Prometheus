@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+	<head>
+		<title></title>
+		</head>
+		<body>
+			
+			<section class="container mt-5">
+				<style>
+				        /* Card styling */
+				        .card {
+				            margin-top: 30px;
+				            border-radius: 10px;
+				            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+				        }
+
+				        .card-body {
+				            padding: 2rem;
+				        }
+
+				        /* Search form styling */
+				        .form-inline {
+				            display: flex;
+				            justify-content: space-between;
+				            align-items: center;
+				        }
+
+				        .form-inline .form-control {
+				            flex-grow: 1;
+				            max-width: 300px;
+				            border-radius: 25px;
+				        }
+
+				        /* Button for adding a customer */
+				        .btn-add-customer {
+				            float: right;
+				            margin-bottom: 20px;
+				        }
+
+				        /* Table styling */
+				        .table thead th {
+				            background-color: #4b6cb7;
+				            color: white;
+				            text-align: center;
+				        }
+
+				        .table tbody tr td {
+				            text-align: center;
+				            vertical-align: middle;
+				        }
+
+				        /* Pagination styling */
+				        .pagination .page-item .page-link {
+				            color: #4b6cb7;
+				        }
+
+				        .pagination .page-item.active .page-link {
+				            background-color: #4b6cb7;
+				            border-color: #4b6cb7;
+				        }
+
+				        /* Submit buttons */
+				        .btn-primary {
+				            background-color: #4b6cb7;
+				            border-color: #4b6cb7;
+				        }
+
+				        .btn-primary:hover {
+				            background-color: #375a97;
+				        }
+
+				        .btn-danger {
+				            background-color: #dc3545;
+				            border-color: #dc3545;
+				        }
+				    </style>
+			    <div class="card">
+			        <div class="card-body">
+			            <h1 class="text-center">Customers</h1>
+
+			            <!-- Add Customer Button -->
+			            <a href="/user/add_customer" class="btn btn-primary btn-add-customer">Add Customer</a>
+
+			            <!-- Search Form -->
+			            <form class="form-inline mb-4" th:action="@{'/user/show_customer'}" method="get">
+			                <input name="name" id="name" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			                <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+			                    <i class="fas fa-search"></i>
+			                </button>
+			            </form>
+
+			            <!-- Customer Table -->
+			            <div class="table-responsive">
+			                <table class="table table-striped table-hover">
+			                    <thead>
+			                        <tr>
+			                            <!-- <th scope="col">ID</th> -->
+			                            <th scope="col">Name</th>
+			                            <th scope="col">Company Name</th>
+			                            <th scope="col">Email</th>
+			                            <th scope="col">Mobile No</th>
+			                            <th scope="col">Actions</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <tr th:each="(c:${customer})">
+			                            <td><a th:href="@{'/user/'+${c.id}+'/customer'}" th:text="${c.name}"></a></td>
+			                            <td th:text="${c.CompanyName}">@mdo</td>
+			                            <td th:text="${c.email}">@mdo</td>
+			                            <td th:text="${c.mobileno}">@mdo</td>
+			                            <td>
+			                                <a th:href="@{'/user/'+${c.id}+'/deletecust'}" class="btn btn-danger btn-sm">Delete</a>
+			                                <form th:action="@{'/user/'+${c.id}+'/update_customer'}" method="Post" class="d-inline">
+			                                    <button class="btn btn-primary btn-sm mt-2">Update</button>
+			                                </form>
+			                            </td>
+			                        </tr>
+			                    </tbody>
+			                </table>
+			            </div>
+
+			            <!-- Pagination -->
+			            <nav aria-label="Page navigation example">
+			                <ul class="pagination justify-content-center">
+			                    <li th:if="${currentPage > 0}" class="page-item">
+			                        <a th:href="@{'/user/show_customer/' + ${currentPage - 1}}" class="page-link" aria-label="Previous">
+			                            <span aria-hidden="true">Previous</span>
+			                        </a>
+			                    </li>
+
+			                    <li th:each="i : ${#numbers.sequence(currentPage, currentPage + 2)}" th:classappend="${currentPage == i ? 'active' : ''}" class="page-item">
+			                        <a th:if="${i < totalPages}" th:href="@{'/user/show_customer/' + ${i}}" class="page-link">
+			                            <span th:text="${i + 1}"></span>
+			                        </a>
+			                    </li>
+
+			                    <li th:if="${currentPage + 2 < totalPages}" class="page-item">
+			                        <a th:href="@{'/user/show_customer/' + ${currentPage + 1}}" class="page-link" aria-label="Next">
+			                            <span aria-hidden="true">Next</span>
+			                        </a>
+			                    </li>
+			                </ul>
+			            </nav>
+
+			        </div>
+			    </div>
+			</section>
+			</body>
+		</html>

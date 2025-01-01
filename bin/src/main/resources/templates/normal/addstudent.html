@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+	<title>Insert title here</title>
+
+</head>
+
+<body class="ho">
+
+	<section>
+
+		<form th:object="${addstudent} " method="get" th:action="@{/user/process_addstudent1}" class="signup-form">
+
+			<div class="form-header">
+				<h1></h1>
+			</div>
+
+			<!-- form body -->
+			<div class="form-body">
+
+				<!-- Firstname and  -->
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="firstname" class="label-title"> Name *</label> <input type="text" name="name"
+							id="firstname" class="form-input" placeholder="enter your name" required="required" />
+					</div>
+					<div class="form-group right">
+						<label for="email" class="label-title">Email *</label> <input type="email" name="email"
+							id="email" class="form-input" placeholder="enter your email" required="required">
+					</div>
+				</div>
+				</br> </br> </br> </br>
+
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="firstname" class="label-title">Mobile Number *</label> <input type="text"
+							name="mobileno" id="mobileno" class="form-input" placeholder="enter your mobile number"
+							required pattern="[0-9]+" />
+					</div>
+					<div class="form-group right">
+						<label for="lastname" class="label-title">Address *</label> <input type="text" name="address"
+							id="address" class="form-input" placeholder="enter your address" />
+					</div>
+				</div>
+
+
+				<div class="horizontal-group">
+					</br>
+					</br>
+					</br>
+					</br>
+					<div class="form-group left">
+						<label for="datetime" class="label-title">Date and Time *</label>
+						<input type="datetime-local" name="dateandtime" id="datetime" class="form-input1"
+							value="2023-12-01 14:54" placeholder="Enter a date and time" />
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+
+
+				<div class="form-group text-center">
+					<span>* required</span>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+
+
+
+
+				<!-- form-footer -->
+				<div class="form-footer"></div>
+			</div>
+		</form>
+
+		<script>
+			const dateControl = document.querySelector('input[type="datetime-local"]');
+			dateControl.value = "2023-12-01 14:54";
+
+			dateControl.addEventListener('input', function () {
+				const selectedDate = new Date(dateControl.value);
+				const hours = selectedDate.getHours();
+				const minutes = selectedDate.getMinutes();
+				const amPM = hours >= 12 ? 'PM' : 'AM';
+				let date = hours + minutes + amPM;
+				datacontrol.value = date;
+
+			});
+
+
+
+		</script>
+</body>
+
+</html>

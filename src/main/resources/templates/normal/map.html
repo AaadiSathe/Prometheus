@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaflet Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<style>
+#map {
+	height: 700px;
+}
+</style>
+</head>
+
+<body>
+	<section>
+		<!-- Add this input element inside the body of your HTML -->
+		<input type="text" id="userIdSearch" placeholder="Search by User ID" />
+
+		<!-- Add a button to trigger the search -->
+		<button onclick="searchByUserId()">Search</button>
+		<div id="map"></div>
+
+
+		<!-- Thymeleaf inline script -->
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			var locations = /*[[${locations}]]*/[];
+			/*]]>*/
+		</script>
+
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+		<script>
+			function initMap(locations) {
+				// Create a map centered at the first location
+				var map = L.map('map', {
+					minZoom : 2
+				}).setView([ locations[0].latitude, locations[0].longitude ],
+						13);
+
+				// Add a tile layer (you can use other tile providers)
+				L.tileLayer(
+						'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+							attribution : '© OpenStreetMap contributors'
+						}).addTo(map);
+
+				// Add markers for each location with user ID and timestamp
+				locations.forEach(function(location) {
+					var marker = L.marker(
+							[ location.latitude, location.longitude ]).addTo(
+							map);
+					marker.bindPopup('User ID: ' + location.userId
+							+ '<br>Timestamp: ' + location.timestamp);
+				});
+
+				// Function to filter markers by user ID
+				function filterMarkers(userId) {
+					// Remove existing markers
+					map.eachLayer(function(layer) {
+						if (layer instanceof L.Marker) {
+							map.removeLayer(layer);
+						}
+					});
+
+					// Add markers for the specified user ID
+					locations.filter(function(location) {
+						return location.userId === userId;
+					}).forEach(
+							function(location) {
+								var marker = L
+										.marker(
+												[ location.latitude,
+														location.longitude ])
+										.addTo(map);
+								marker.bindPopup('User ID: '
+										+ location.userId
+										+ '<br>Timestamp: '
+										+ new Date(location.timestamp)
+												.toLocaleString());
+							});
+				}
+
+				// Function to handle user ID search
+				window.searchByUserId = function() {
+					var userId = document.getElementById('userIdSearch').value;
+					if (userId.trim() !== '') {
+						filterMarkers(parseInt(userId));
+					} else {
+						// If the input is empty, show all markers
+						locations.forEach(function(location) {
+							var marker = L.marker(
+									[ location.latitude, location.longitude ])
+									.addTo(map);
+							marker.bindPopup('User ID: '
+									+ location.userId
+									+ '<br>Timestamp: '
+									+ new Date(location.timestamp)
+											.toLocaleString());
+						});
+					}
+				};
+
+			}
+
+			// Example usage with multiple locations:
+			initMap(locations);
+		</script>
+	</section>
+</body>
+
+</html>

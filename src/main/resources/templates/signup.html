@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRM - Create New Account</title>
+    <link rel="stylesheet" href="/css/signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<section>
+    <div class="container">
+        <div class="left-side">
+            <h1>HRM</h1>
+            <div class="paraone">
+                <p>arrenge the people effectively for performance and organizational success.</p>
+            </div>
+            <div class="illustration">
+                <img src="Images/Group.png" alt="HRM Illustration">
+            </div>
+            <h2>Looking for people until another multiverse</h2>
+            <div class="paratwo">
+                <p>The new system aimed to enhance employee data management, payroll processing, performance evaluations, and reporting capabilities.</p>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <div class="rightcon">
+                <h2>Create new account</h2>
+                <p>Welcome, please enter your details.</p>
+            </div>
+            <form class="signup-form" action="/do_register" method="post">
+                <div id="alertMessage" class="custom-alert" role="alert">
+                    <div id="toast" class="toast">Sign Up Successfully!</div>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="form-control" name="name" id="name_field" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <input type="email" class="form-control" name="email" id="email_field" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" id="password" class="form-control" required>
+                    <label>Password</label>
+                    <span class="toggle-password" onclick="togglePassword()">
+                        <i class="fa fa-eye" id="eye-icon"></i>
+                    </span>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="confirmpassword" class="form-control" required>
+                    <label>Confirm Password</label>
+                </div>
+                <div class="terms">
+                    <input type="checkbox" id="agree" name="agreement" required>
+                    <label for="agreement">
+                        I hereby agree to all the contents of the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                    </label>
+                </div>
+
+                <button type="submit" class="signup-btn">Sign Up</button>
+            </form>
+
+            <div class="social-login">
+                <p>or</p>
+                <div class="social-icons">
+                    <a href="#"><img src="Images/goog.svg" alt="Google"></a>
+                    <a href="#"><img src="Images/Vector.svg" alt="Facebook"></a>
+                    <a href="#"><img src="Images/twi.svg" alt="Twitter"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+
+        // Function to show toast notification
+        function showToast(message) {
+            var toast = document.getElementById("toast");
+            toast.textContent = message;
+            toast.style.display = 'block';
+
+            // Hide the toast after 3 seconds and redirect to login page
+            setTimeout(function() {
+                toast.style.display = 'none';
+                window.location.href = "/signin"; // Adjust the URL as needed
+            }, 3000);
+        }
+
+        // Handle form submission
+        document.querySelector('.signup-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+
+            // Use fetch to send the form data
+            fetch('/do_register', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    showToast("Sign Up Successfully!");
+                } else {
+                    showToast("Error signing up, please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast("An error occurred. Please try again.");
+            });
+        });
+    </script>
+</section>
+</body>
+</html>

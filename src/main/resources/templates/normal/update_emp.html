@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+	<title>Edit Employee</title>
+</head>
+<body>
+	<section>
+		<form action="#" th:object="${employee}" enctype="multipart/form-data"
+			th:action="@{/user/process_updateemp}" class="signup-form" method="post">
+			
+			<input type="hidden" th:value="${employee.employeeid}" name="employeeid">
+
+			<!-- form body -->
+			<div class="form-body">
+				<br><br>
+
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="name" class="label-title">Name</label> 
+						<input th:value="${employee.name}" type="text" name="name" class="form-input" placeholder="Name">
+					</div>
+					<div class="form-group right">
+						<label for="email" class="label-title">Email</label> 
+						<input th:value="${employee.email}" type="email" name="email" class="form-input" placeholder="Email">
+					</div>
+				</div>
+
+				<br><br><br><br>
+
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="mobileno" class="label-title">Mobile No</label> 
+						<input th:value="${employee.mobileno}" type="text" name="mobileno" class="form-input" placeholder="Mobile No" required pattern="[0-9]+">
+					</div>
+					<div class="form-group right">
+						<label for="address" class="label-title">Address</label> 
+						<input th:value="${employee.address}" type="text" name="address" class="form-input" placeholder="Address">
+					</div>
+				</div>
+
+				<br><br><br><br>
+
+				<!-- Department Field -->
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="department" class="label-title">Department</label>
+						<input th:value="${employee.department}" type="text" name="department" class="form-input" placeholder="Department">
+					</div>
+				</div>
+
+				<br><br>
+
+				<div class="form-group text-center">
+					<button type="submit" class="btn btn-primary">Save Employee</button>
+				</div>
+
+				<div class="form-footer"></div>
+		</form>
+	</section>
+</body>
+</html>
+
+
+<!--<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+
+		<form action="#" th:object="${employee}" enctype="multipart/form-data"
+			th:action="@{/user/process_updateemp}" class="signup-form" method="post">
+			<input type="hidden" th:value="${employee.employeeid}"
+				name="employeeid">
+
+			<div class="form-body">
+				<br>
+				<br>
+				
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="firstname" class="label-title"> name </label> <input
+							th:value=${employee.name} type="text" name="name"
+							class="form-input" placeholder=" name">
+					</div>
+
+					<div class="form-group right">
+						<label for="email" class="label-title">Email</label> <input
+							th:value=${employee.email} type="email" name="email"
+							class="form-input" placeholder="Email">
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+
+				<div class="horizontal-group">
+					<div class="form-group left">
+						<label for="firstname" class="label-title">mobileno </label> <input
+							th:value=${employee.mobileno} type="text" name="mobileno"
+							class="form-input" placeholder="MobileNo" required
+							pattern="[0-9]+">
+					</div>
+
+					<div class="form-group right">
+						<label for="lastname" class="label-title">address</label> <input
+							th:value=${employee.address} type="text" name="address"
+							class="form-input" placeholder="Address">
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+
+				<div class="form-group text-center">
+
+					<button type="submit" class="btn btn-primary">Save
+						Employee</button>
+				</div>
+
+				<div class="form-footer"></div>
+		</form>
+
+	</section>
+</body>
+</html>-->

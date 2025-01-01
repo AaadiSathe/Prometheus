@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/loginpageStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="main">
+        <div class="main-row-inner">
+            <div class="main-row">
+                <h1 class="main-row-heading">Company Project</h1>
+                <p class="main-row-p1">Fostering engagement, and achieving <br>organizational goals.</p>
+                <div class="main-row-image">
+                    <img alt="HRM Image" src="/images/main.png">
+                </div>
+                
+                <p class="main-row-p2">Maintain high performance <br>levels with HRM.</p>
+                <p class="main-row-p3">It provides opportunities for skill development and advancement 
+                    <span class="break-line">and encourages continuous learning and professional growth.</span>
+                </p>
+            </div>
+
+            <div class="right-section">
+                <h1 class="right-section-heading">Hello again</h1>
+                <p class="right-section-p1">Welcome back, before logging in, <br>make sure you enter the account correctly.</p>
+
+                <form class="login-form" action="/signin" method="post">
+                    <!-- Thymeleaf error message handling -->
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Invalid Username or Password
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-info">
+                        You have been logged out.
+                    </div>
+
+                    <input type="email" name="username" placeholder="Username" required th:value="${param.username}" />
+
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <img src="/images/Eye.png" alt="Toggle Password" class="toggle-password" id="eye-icon" onclick="togglePassword()">
+                    </div>
+
+                    <a href="#" class="forgot-password">Forgot your password?</a>
+
+                    <button type="submit">submit(login)</button>
+                </form>
+
+                <div class="line">
+                    <hr><span>or</span><hr>
+                </div>
+
+                <div class="social-login">
+                    <div class="social-icons">
+                        <a href="#"><img class="googal"    src="/images/Group 33.png" alt="Google"></a>
+                        <a href="#"><img class="facebook" src="/images/Vector.png" alt="Facebook"></a>
+                        <a href="#"><img  class="twiter"src="/images/twiter.png" alt="Twitter"></a>
+                    </div>
+                </div>
+
+                <p class="signup-text">Don't have an account yet? <a href="#">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("password");
+            const eyeIcon = document.getElementById("eye-icon");
+
+            // Toggle password visibility
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text"; // Show password
+                eyeIcon.src = "/images/eye-open-icon.png"; // Change to open eye icon (ensure this path is correct)
+            } else {
+                passwordInput.type = "password"; // Hide password
+                eyeIcon.src = "/images/eye-icon.png"; // Change back to closed eye icon (ensure this path is correct)
+            }
+        }
+    </script>
+</body>
+</html>

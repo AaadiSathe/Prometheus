@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.5.0/js/bootstrap-datetimepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.5.0/css/bootstrap-datetimepicker.min.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+	<title>Venddor Page</title>
+</head>
+
+<body>
+	<section>
+		<style>
+		    .card {
+		        border: none;
+		        border-radius: 10px;
+		    }
+
+		    .form-control {
+		        border-radius: 5px;
+		    }
+
+		    .label-title {
+		        font-weight: bold;
+		        font-size: 14px;
+		    }
+
+		    .text-danger {
+		        font-size: 12px;
+		    }
+
+		    .btn {
+		        border-radius: 5px;
+		    }
+
+		    .form-header {
+		        background-color: #f8f9fa;
+		        padding: 20px;
+		        border-radius: 5px;
+		    }
+		</style>
+		<div class="card">
+			<nav>
+				<div class="nav nav-tabs" id="nav-tab" role="tablist"
+					style="justify-content: center; background-color: rgb(233, 222, 239);border-radius: 5px;">
+					<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+						aria-controls="nav-home" aria-selected="true">Home</a>
+					<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+						aria-controls="nav-profile" aria-selected="false">Profile</a>
+					<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
+						aria-controls="nav-contact" aria-selected="false">Contact</a>
+				</div>
+			</nav>
+			<div class="tab-content" id="nav-tabContent">
+				<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+					<div class="card">
+						<div class="card-body">
+
+							<div class="container text-center">
+								<h3>Contact Page</h3>
+								<a class="btn btn-primary mt-4 btn-block">Start
+									Adding through Profile Tab Above >></a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+					<div class="card">
+						<div class="card-body" style="height: 700px;">
+
+							<div class="container text-center">
+								<div class="form-header text-center"
+									style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+									<h1 style="font-weight: bold;">Vendor Records Maintained</h1>
+								</div>
+								<img style="width: 700px; height: 500px; border-radius: 10px; margin-top: 10px;"
+									th:src="@{/images/vendor_home.jpg}"><br>
+								<a class="btn btn-primary mt-4 btn-block">Start
+									Adding through Profile Tab Above >></a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+
+					<form th:object="${vendor}" id="searchForm" method="post" th:action="@{/user/process_addvendor}"
+						class="signup-form">
+
+						<div class="form-header text-center"
+							style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+							<h1 style="font-weight: bold;">Vendor Adding Page</h1>
+						</div>
+
+						<!-- form body -->
+						<div class="form-body">
+							<div class="row">
+								<div class="col">
+									<label for="firstname" class="label-title">Name*</label>
+									<input type="text" name="name" class="form-control" id="nameInput"
+										placeholder="Enter Your Name" oninput="validateName()" pattern="[A-Za-z\s]+"
+										required="required">
+									<div class="nn" id="validationMessage0"></div>
+								</div>
+
+
+								<div class="col">
+									<label for="firstname" class="label-title">Mobile Number *</label> <input
+										type="text" name="mobile" id="mobile" class="form-input"
+										placeholder="enter your mobile number" required pattern="[0-9]{10}"
+										oninput="validateMobile()" />
+									<div class="nn" id="validationMessage1"></div>
+								</div>
+							</div>
+
+
+							<div class="row mt-2">
+								<div class="col">
+									<label for="email" class="label-title">Email *</label> <input name="email"
+										type="email" id="email" class="form-input" placeholder="enter your email"
+										required="required" oninput="validateEmail()" />
+									<!--pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"-->
+									<div class="nn" id="validationMessage2"></div>
+
+								</div>
+								<div class="col">
+									<label for="lastname" class="label-title">Address *</label> <input type="text"
+										name="address" id="address" class="form-input" placeholder="enter your address"
+										oninput="validateAddress()" pattern="[A-Za-z\s]+" />
+									<div class="nn" id="validationMessage3"></div>
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col">
+									<label for="products" class="label-title">Products *</label> <input type="text"
+										name="products" id="product" class="form-input"
+										placeholder="Enter your Products" required="required"
+										oninput="validateProduct()" pattern="[A-Za-z\s]+">
+									<div class="nn" id="validationMessage4"></div>
+
+								</div>
+								<div class="col">
+									<label for="businessType" class="label-title">Business Type *</label> <input
+										type="text" name="businessType" id="business" class="form-input"
+										placeholder="enter your Business type" oninput="validateBusiness()"
+										pattern="[A-Za-z\s]+" />
+									<div class="nn" id="validationMessage5"></div>
+								</div>
+							</div>
+							<div class="horizontal-group">
+
+								</br>
+								<div class="form-group left">
+									<label for="datetime" class="label-title">Date and Time *</label>
+                     <input type='datetime-local' name="dateOfRegistration" id="datetimeInput"
+										class="form-input1" value="2023-12-01T14:54"
+										placeholder="Enter a date and time" />
+                     <span class="input-group-addon">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                     </span>
+								</div>
+							</div>
+							</br>
+							</br>
+							</br>
+							</br>
+
+
+							<div class="form-group text-center">
+								 <a href="/user/show_vendor/0" class="btn btn-success">Submit</a>
+							</div>
+
+					</form>
+					<!-- form-footer -->
+					<div class="form-footer"></div>
+				</div>
+				</form>
+				<script>
+					function validateName() {
+						var nameInput = document.getElementById("nameInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage0");
+
+						var nameRegex = /^[A-Za-z\s]+/;
+
+						if (nameInput === "") {
+							document.getElementById("validationMessage0").textContent = "Please enter your name.";
+						} else if (!nameRegex.test(nameInput)) {
+							document.getElementById("validationMessage0").textContent = "Only alphabetic characters are allowed for the name.";
+						} else {
+							document.getElementById("validationMessage0").textContent = "";
+						}
+
+					}
+				</script>
+
+				<script>
+					function validateProduct() {
+						var productNameInput = document
+							.getElementById("product").value;
+						var validationMessage = document
+							.getElementById("validationMessage4");
+
+						// Use a regular expression to check if only alphabetic characters are entered
+						var secondRegex = /^[A-Za-z\s]+$/;
+
+						if (productNameInput === "") {
+							document.getElementById("validationMessage4").textContent = "Please enter Product..";
+						}
+						else if (!secondRegex.test(productNameInput)) {
+							document.getElementById("validationMessage4").textContent = "Only alphabetic characters are allowed for the Nik name.";
+						} else {
+							validationMessage.textContent = ""; // Clear the validation message if the input is valid
+						}
+					}
+				</script>
+
+
+				<script>
+					function validateAddress() {
+						var workInput = document.getElementById("address").value;
+						var validationMessage = document
+							.getElementById("validationMessage3");
+
+						var workRegex = /[A-Za-z\s]+/;
+
+						if (workInput === "") {
+							validationMessage.textContent = "Please enter you address....!";
+						}
+						else if (!workRegex.test(workInput)) {
+							validationMessage.textContent = "Only alphabetic characters are allowed for the address.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+				<script>
+					function validateBusiness() {
+						var businessInput = document.getElementById("business").value;
+						var validationMessage = document
+							.getElementById("validationMessage5");
+
+						var workRegex = /[A-Za-z\s]+/;
+
+						if (businessInput === "") {
+							validationMessage.textContent = "Please enter you business type....!";
+						}
+						else if (!workRegex.test(businessInput)) {
+							validationMessage.textContent = "Only alphabetic characters are allowed for the address.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+
+				<script>
+					function validateEmail() {
+						var emailInput = document.getElementById("email").value;
+						var validationMessage = document
+							.getElementById("validationMessage2");
+
+						var emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+						;
+
+						if (emailInput === "") {
+							validationMessage.textContent = "Please enter your email.."
+						}
+						else if (!emailRegex.test(emailInput)) {
+							validationMessage.textContent = "Please enter a valid email address.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+				<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+				<script>
+					function validateMobile() {
+						var phoneInput = document.getElementById('mobile').value;
+						var validationMessage = document.getElementById("validationMessage1");
+
+						var phoneRegex = /^[0-9]{10}$/;
+
+						if (phoneInput === "") {
+							validationMessage.textContent = "Please enter your phone number.";
+						} else if (!/^\d+$/.test(phoneInput)) {
+							validationMessage.textContent = "Phone number should contain only digits.";
+						} else if (phoneInput.length !== 10) {
+							validationMessage.textContent = "Phone number should be exactly 10 digits.";
+						} else if (!phoneRegex.test(phoneInput)) {
+							validationMessage.textContent = "Please enter a valid 10-digit phone number.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+
+				</script>
+   <!-- Include flatpickr CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+<!-- Include flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<!-- Initialize flatpickr datetime picker -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr('#datetimeInput', {
+           enableTime: true,
+            dateFormat: "Y-m-d h:i K", 
+            defaultDate: "today",
+            timeZone: "UTC", 
+            time_24hr: false,
+            minDate: "today"
+        });
+    });
+</script>
+
+
+				<script>
+					function parseDateTimeInput() {
+						const dateControl = document.getElementById('datetimeInput');
+						const selectedDate = new Date(dateControl.value);
+						const year = selectedDate.getFullYear();
+						const month = ('0' + (selectedDate.getMonth() + 1)).slice(-2);
+						const day = ('0' + selectedDate.getDate()).slice(-2);
+						const hours = ('0' + selectedDate.getHours()).slice(-2);
+						const minutes = ('0' + selectedDate.getMinutes()).slice(-2);
+						const formattedDateTime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+						dateControl.value = formattedDateTime;
+					}
+
+					document.getElementById('searchForm').addEventListener('submit', function (event) {
+						event.preventDefault();
+						parseDateTimeInput();
+						var formData = new FormData(this);
+
+						fetch(this.getAttribute('action'), {
+							method: 'POST',
+							body: formData
+						})
+							.then(response =>
+								response.json())
+							.then(data => {
+								console.log(data);
+								if (data.success === "true") {
+									Swal.fire({
+										icon: 'success',
+										title: 'Vendor Added Successfully!',
+										showConfirmButton: false,
+										timer: 1500
+									}).then(() => {
+										document.getElementById('searchForm').reset();
+									});
+								} else {
+									Swal.fire({
+										icon: 'error',
+										title: 'Oops...',
+										text: 'Failed to add vendor!',
+									});
+								}
+							})
+							.catch(error => {
+								console.error('Error:', error);
+							});
+					});
+
+
+				</script>
+	
+
+			</div>
+	</section>
+</body>
+
+</html>

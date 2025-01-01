@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+
+
+		<form action="#" th:object="${coworker}" 
+			th:action="@{/user/process_updatecoworker}" class="signup-form" method="post">
+			<input type="hidden" th:value="${coworker.coworkerid}"
+				name="coworkerid">
+
+
+
+			<!-- form body -->
+			<div class="form-body">
+				<br>
+				<br>
+				<br>
+
+
+
+				<div class="horizontal-group col">
+					<div class="form-group left col-6">
+						<label for="firstname" class="label-title"> name </label> <input
+							th:value=${coworker.name} type="text" name="name"
+							class="form-input" oninput="validateName()" required placeholder=" name">
+							<div class="form-group mt-1"><p style="color: red;" id="validationMessage" class="error-message" ></p></div>
+					
+					</div>
+
+					<div class="form-group right col-6">
+						<label for="email" class="label-title">Email</label> <input
+							th:value=${coworker.email} type="email" name="email"
+							class="form-input" placeholder="Email"  oninput="validateSearchForm()">
+							<div class="vlaidate"><p style="color: red;  " id="validationemail" class="error-message"></p></div>
+					
+				             </div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+				<div class="horizontal-group col">
+                <div class="form-group left col-6">
+						<label for="firstname" class="label-title"> Address </label> <input
+							th:value=${coworker.address} type="text"  oninput="validateAddress()" name="address"
+							class="form-input" placeholder=" name">
+							<div class="form-group mt-1"><p style="color: red;" id="validationAdd" class="error-message" ></p></div>
+					
+					</div>
+				
+					<div class="form-group left col-6">
+						<label for="firstname" class="label-title">mobileno </label> <input
+							th:value=${coworker.mobileno} oninput="validateMobileNumber()" type="text" name="mobileno"
+							class="form-input"  placeholder="MobileNo" required id="validationnumber"
+							pattern="[0-9]+">
+							<div class="validate"><p style="color: red;" id="validationnumber" class="error-message" ></p></div>
+					
+					</div>
+
+					</div>
+					<div class="horizontal-group col">
+                    <div class="form-group left col-6">
+						<label for="dropdown" class="label-title"> Sight Work: </label> <input
+							th:value=${coworker.dropdownvalue} type="text"  oninput="validateAddress()" name="dropdownvalue"
+							class="form-input" placeholder=" name">
+							<div class="form-group mt-1"><p style="color: red;" id="validationAdd" class="error-message" ></p></div>
+					
+					</div>
+				
+					</br>
+				</br>
+				</br>
+				</br>
+				</br>
+
+					</div>
+				</div>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+
+
+				<div class="form-group text-center">
+
+					<button type="submit" class="btn btn-primary">Update Co-Worker</button>
+				</div>
+
+             <!-- form-footer -->
+				<div class="form-footer"></div>
+		</form>
+
+<script type="text/javascript">
+	
+     function validateName() {
+ 	  console.log("hi...");
+      var inp = document.getElementById('name');
+      var val = document.getElementById('validationMessage');
+          var txt = /^[a-zA-Z]*$/;
+      
+      if (!txt.test(inp.value)) {
+        val.textContent = 'Number is Not Allowed  in your name .';
+        return false;
+      }
+
+      val.innerText = '';
+
+    
+      return true;
+    }
+    
+function validateSearchForm() {
+            var searchInput = document.getElementById("email").value;
+             var val = document.getElementById('validationemail');
+            // Email validation using a regular expression
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(searchInput)) {
+                val.innerText = 'email Is not Valid.';
+                return false;
+              }
+
+
+			  val.innerText = '';
+            // You can add more complex validation logic if needed
+
+            return true;
+        }
+    function validateMobileNumber() {
+    var mobileInput = document.getElementById("mobileno").value;
+    var val = document.getElementById('validationnumber');
+
+    // Mobile number validation using a regular expression
+    var mobileRegex = /^[0-9]{10}$/;
+
+    if (!mobileRegex.test(mobileInput)) {
+        val.innerText = 'Mobile number is not valid. It should be a 10-digit number.';
+        return false;
+    }
+
+    val.innerText = '';
+    // You can add more complex validation logic if needed
+
+    return true;
+}
+     
+    function validateAddress() {
+ 	  console.log("hi...");
+      var inp = document.getElementById('address');
+      var val = document.getElementById('validationAdd');
+          var txt = /^[a-zA-Z]*$/;
+      
+      if (!txt.test(inp.value)) {
+        val.innerText = 'Number is Not Allowed in Address.';
+        return false;
+      }
+
+    
+
+    
+      return true;
+    }
+    </script>
+
+	</section>
+</body>
+	<!-- @GetMapping("/{Id}/delete")
+			public String deleteEmp(@PathVariable("Id") Integer cId, 
+			Model model, Principal principal,
+					HttpSession session) {
+	
+				Addemployee addemploye = this.addemployeeRepository.findById(cId).get();
+				addemploye.setUser(null);
+				this.addemployeeRepository.delete(addemploye);
+	
+				session.setAttribute("message", new com.smart.helper.Message("Employee Deleted Successfuly", "success"));
+	
+				return "redirect:/user/show_employe/0";
+			}
+	 @RequestMapping("/{customer}/id")
+	    public String showUpdateCustForm(@PathVariable Integer id, Model model) {
+	        Addcustomer customer = addcustomerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid student Id:" + studentid));
+	        model.addAttribute("customer", customer);
+	 model.addAttribute("heading", "Update Customer");
+	        return "/normal/update_customer";
+	    }
+	@PostMapping("/process_updateemp")
+	public String emp_process(@ModelAttribute Addemployee emp, 
+		Principal principal, HttpSession session) {
+	try {
+		String name = principal.getName();
+		User user = userRepository.getUserByUserName(name);
+		
+		emp.setUser(user);
+		user.getAddemployee().add(emp);
+		userRepository.save(user);
+		System.err.println("user Data " + emp);
+		session.setAttribute("message", new com.smart.helper.Message("Your Contact added", "success"));
+	} catch (Exception e) {
+		e.printStackTrace();
+		session.setAttribute("message", new com.smart.helper.Message("something went wrong", "danger"));
+	}
+	return "normal/addemployeeform";
+	} -->
+
+</html>

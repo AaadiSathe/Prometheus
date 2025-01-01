@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org" th:replace="normal/base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+
+	<script th:src="@{/js/dropdown.js}"></script>
+</head>
+
+<body>
+	<section>
+		<div class="p-2">
+			<div class="text-center"></div>
+			<form action="#" th:object="${contact}" enctype="multipart/form-data" method="post"
+				th:action="@{/user/process_contact}">
+				<div class="row">
+					<div class="col">
+						<input type="text" name="name" class="form-control" id="nameInput" placeholder=" name"
+							oninput="validateName()" pattern="[a-zA-Z]+$+" required="required">
+						<div class="nn" id="validationMessage0"></div>
+					</div>
+
+
+					<div class="col">
+						<input type="text" name="secondName" class="form-control" id="secondNameInput"
+							placeholder="Nik name" required="required" oninput="validateName1()" pattern="[A-Za-z]+">
+						<div class="nn" id="validationMessage1"></div>
+					</div>
+				</div>
+
+
+				<div class="row mt-2">
+					<div class="col">
+
+						<input type="text" name="work" class="form-control" id="workInput" placeholder="Work"
+							pattern="[A-Za-z\s]+" oninput="validateWorkInput()" required="required">
+						<div class="nn" id="validationMessage2"></div>
+
+
+					</div>
+					<div class="col">
+
+						<input type="email" name="email" id="email" class="form-control" placeholder="Email"
+							required="required">    <!-- pattern="\S+@\S+\.\S+$/" -->
+						<div class="nn" id="validationMessage3"></div>
+					</div>
+				</div>
+
+
+
+				<div class="row mt-2">
+					<div class="col">
+						<input type="text" name="phone" class="form-control" required="required" placeholder="Phone"
+							pattern="[0-9]{10}" oninput="validatePhone()">
+						<div class="nn" id="validationMessage4"></div>
+					</div>
+					<!-- <div class="col-2">Country</div> -->
+					<div class="col">
+						<select id="country" name="countryId" class="form-control" onchange="getState()" value="#"
+							required="required">
+							<option value='-1'>Select Country</option>
+							<option th:each="ob:${countryList}" th:value="${ob.id}" th:text="${ob.name}">
+								<!-- <a th:href="@{'/user/state/'+${ob.id}}" class="btn btn-danger btn-sm" th:text="${ob.id+' '+ob.name}"> </a> -->
+							</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+
+					<div class="col">
+						<select id="state" class="form-control" name="stateId" onchange="getCity()" required="required">
+							<option value='-1'>Select State</option>
+
+
+						</select>
+					</div>
+					<div class="col">
+						<select id="city" class="form-control" name="cityId" required="required">
+							<option value='-1'>Select City</option>
+							<option th:each="ob:${cityList}" th:value="${ob.name}" th:text="${ob.name}"><span
+									th:text="${ob.name}"></span>
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="d-flex mt-2">
+					<div class="" style="width: 80%">
+						<input id="mytextarea" type="text" name="description" class="form-control"
+							placeholder="description">
+					</div>
+					<div class="m-1" style="width: 20%; padding-bottom: 20px; padding-left: 10px;">
+						<img class="border" style="width: 150px; width: 150px; padding-bottom: 10px;" name="addimg" id="addimg"
+							th:src="@{/images/icon.png}" src="#" />
+						<input type="file" name="profileImage" id="profileImage" onchange="loadFile(event)" style="margin-top: 5px;">
+					</div>
+
+				</div>
+				<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
+					referrerpolicy="origin"></script>
+				<script>
+					tinymce.init({
+						selector: '#mytextarea'
+					});
+				</script>
+				<div class="container text-center">
+					<button class="btn btn-outline-primary">Save Contact</button>
+				</div>
+
+
+				<script>
+					function validateName() {
+						var nameInput = document.getElementById("nameInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage0");
+
+						var nameRegex = /^[a-zA-Z]+$/;
+
+						if (nameInput === "") {
+							document.getElementById("validationMessage0").textContent = "Please enter your name.";
+						} else if (!nameRegex.test(nameInput)) {
+							document.getElementById("validationMessage0").textContent = "Only alphabetic characters are allowed for the name.";
+						} else {
+							document.getElementById("validationMessage0").textContent = "";
+						}
+
+					}
+				</script>
+
+				<script>
+					function validateName1() {
+						var secondNameInput = document
+							.getElementById("secondNameInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage1");
+
+						// Use a regular expression to check if only alphabetic characters are entered
+						var secondRegex = /^[A-Za-z]+$/;
+
+						if (secondNameInput === "") {
+							document.getElementById("validationMessage1").textContent = "Please enter you Nick Name..";
+						}
+						else if (!secondRegex.test(secondNameInput)) {
+							document.getElementById("validationMessage1").textContent = "Only alphabetic characters are allowed for the Nik name.";
+						} else {
+							validationMessage.textContent = ""; // Clear the validation message if the input is valid
+						}
+					}
+				</script>
+
+
+				<script>
+					function validateWorkInput() {
+						var workInput = document.getElementById("workInput").value;
+						var validationMessage = document
+							.getElementById("validationMessage2");
+
+						var workRegex = /^[A-Za-z\s]+$/;
+
+						if (workInput === "") {
+							validationMessage.textContent = "Please enter you work....!";
+						}
+						else if (!workRegex.test(workInput)) {
+							validationMessage.textContent = "Only alphabetic characters are allowed for the Work.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+
+
+				<script>
+					function validateEmail() {
+						var emailInput = document.getElementById("email");
+						var validationMessage = document
+							.getElementById("validationMessage3");
+
+						var emailRegex = /^\S+@\S+\.\S+$/;
+
+						if (emailInput === "") {
+							validationMessage.textContent = "Please enter your email.."
+						}
+						else if (!emailRegex.test(emailInput)) {
+							validationMessage.textContent = "Please enter a valid email address.";
+						} else {
+							validationMessage.textContent = "";
+						}
+					}
+				</script>
+				<script>
+					function validatePhone() {
+						var phoneInput = document
+							.querySelector('input[name="phone"]').value;
+						var validationMessage = document
+							.getElementById("validationMessage4");
+
+						var phoneRegex = /^[0-9]{10}$/;
+
+
+						if (phoneInput === "") {
+							document.getElementById("validationMessage4").textContent = "Please enter your phone number.";
+						} else if (!phoneRegex.test(phoneInput)) {
+							document.getElementById("validationMessage4").textContent = "Please enter a 10-digit phone number.";
+						} else {
+							document.getElementById("validationMessage4").textContent = "";
+						}
+
+					}
+				</script>
+
+
+			</form>
+		</div>
+	</section>
+	<script type="text/javascript">
+
+	</script>
+</body>
+
+</html>

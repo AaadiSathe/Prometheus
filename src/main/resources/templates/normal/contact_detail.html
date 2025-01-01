@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmln:th="http://www.thymeLeaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<section>
+		<div class="card" th:if=${contact}>
+			<div class="card-body">
+
+				<div class="container ">
+					
+					<div class="card" th:if=${contact}>
+						<div class="card-body ">
+
+							<div class="container  d-flex justify-content-center text-center">
+								<div class=" " style="width: auto; width: auto;">
+									<img style="width: 250px; width: 250px;"
+										th:src="@{'/images/'+${contact.image==null ? 'icon.png':contact.image}}"><br> <span
+										style="font-size: 20px; font-weight: 500;"
+										th:text="${contact.name} + ' ' + ${contact.secondName}"></span>
+								</div>
+							</div>
+
+
+
+							<div>
+								<div>
+									<table>
+										<thead>
+											<tr>
+												<!-- <th scope="col">#</th>
+                              <th scope="col">First</th>
+                              <th scope="col">Last</th>
+                              <th scope="col">Handle</th>-->
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th style="font-size: 25px; font-weight: 500;" scope="row">Name:</th>
+												<td><span style="font-size: 25px;"
+													th:text="${contact.name+' '+contact.secondName}"></span></td>
+
+
+											</tr>
+											<tr>
+												<th style="font-size: 25px; font-weight: 500;" scope="row">Email:</th>
+												<td><span style="font-size: 25px;"
+													th:text="${contact.email}"></span></td>
+
+											</tr>
+											<tr>
+												<th style="font-size: 25px; font-weight: 500;" scope="row">Contact:</th>
+												<td><span style="font-size: 25px;"
+													th:text="${contact.phone}"></span></td>
+
+											</tr>
+											<tr>
+												<th style="font-size: 25px; font-weight: 500;" scope="row">Work:</th>
+												<td><span style="font-size: 25px;"
+													th:text="${contact.work}"></span></td>
+
+											</tr>
+											</tr>
+											<tr>
+												<th style="font-size: 25px; font-weight: 500;" scope="row">Description:</th>
+												<td><span style="font-size: 25px;"
+													th:text="${contact.description}"></span></td>
+
+											</tr>
+
+
+										</tbody>
+
+
+									</table>
+
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+	</section>
+
+</body>
+</html>

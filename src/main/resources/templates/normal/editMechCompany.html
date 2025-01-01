@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="normal/base::Layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit Mech Production</title>
+<!-- <link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"> -->
+	 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ -->
+ 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+ 
+ </head>
+<body>
+	<section>
+		<form th:object="${mechProduction}" method="post"
+			th:value="${mechProduction.mechId}"
+			th:action="@{'/user/update/' + ${mechProduction.mechId}}"
+			class="signup-form" id="formExample">
+			<!-- form header -->
+	<div class="form-header">
+				<h3>Edit Mech Production</h3>
+			</div> 
+			<!-- form body -->
+			<div class="form-body">
+				<div class="row row-cols-2">
+					<div class="col">
+						<label for="name" class="label-title">Name *</label> 
+						<input
+							type="text" name="name" id="name"
+							th:value="${mechProduction.name}" class="form-control form-input"
+							placeholder="Enter your name" />
+						<div id="nameMessage" class="form-text text-danger pb-3"></div>
+					</div>
+					<div class="col">
+						<label for="mfgDate" class="label-title">MFG Date *</label>
+						 <input
+							type="date" name="mfgDate" id="mfgDate"
+							th:value="${mechProduction.mfgDate}" class="form-control form-input"
+							placeholder="Enter mfg_date" required />
+						<div id="dateMessage" class="form-text text-danger pb-3"></div>
+					</div>
+
+
+
+					<div class="col">
+						<label for="modelNo" class="label-title">Model Number *</label> 
+						<input
+							type="text" name="modelNo" id="modelNo"
+							th:value="${mechProduction.modelNo}" class="form-control form-input"
+							placeholder="Enter your model number" required />
+						<div id="mnMessage" class="form-text text-danger"></div>
+					</div>
+					<div class="col">
+						<label for="finalizerName" class="label-title">Finalizer
+							Name *</label> <input type="text" name="finalizerName" id="finalizerName"
+							th:value="${mechProduction.finalizerName}" class="form-control form-input"
+							placeholder="Enter finalizer name" required />
+						<div id="fnameMessage" class="form-text text-danger"></div>
+					</div>
+
+
+					<!--///////////////////////////////////////////////////////////////////////////////////////  -->
+
+					<div class="col">
+						<label for="countrySelect" class="label-title">Select
+							Country *</label> <br> <select id="countrySelect" name="countryName"
+							class="form-control custom-select-width">
+							<option value="" disabled>Select a Country</option>
+							<option th:each="country : ${countries}"
+								th:value="${country.countryName}"
+								th:text="${country.countryName}"
+								th:selected="${country.countryName == mechProduction.countryName}"></option>
+						</select>
+						<div id="countryMessage" class="form-text text-danger"></div>
+					</div>
+
+							<div class="col">
+								<label for="stateSelect" class="label-title">Select
+									State *</label> <br> <select id="stateSelect" name="stateName"
+									class="form-control custom-select-width">
+									<option value="">Select a State</option>
+									<option th:each="state : ${states}"
+										th:value="${state.stateName}" th:text="${state.stateName}"
+										th:selected="${state.stateName == mechProduction.stateName}"></option>
+								</select>
+								<div id="stateMessage" class="form-text text-danger"></div>
+							</div>
+
+
+
+							<div class="col">
+								<label for="citySelect" class="label-title">Select City
+									*</label> <br> <select id="citySelect" name="cityName"
+									class="form-control custom-select-width">
+									<option value="">Select a City</option>
+									<option th:each="city : ${cities}" th:value="${city.cityName}"
+										th:text="${city.cityName}"
+										th:selected="${city.cityName == mechProduction.cityName}"></option>
+								</select>
+								<div id="cityMessage" class="form-text text-danger"></div>
+							</div>
+						</div>
+						</div>
+						<br> <br> <br> <br>
+						<div
+							class="form-group text-center d-flex justify-content-center align-items-center mt-3">
+							<span>* required &nbsp;</span>
+							<button type="button" class="btn btn-primary"
+								onclick="submitForm()">Update</button>
+						</div>
+					
+		</form>
+		<script>
+        
+        function submitForm() {
+            var form = document.getElementById('formExample');
+
+            // Name Validation
+            var name = document.getElementById('name').value;
+            var nameVal = false;
+
+            var namePattern = /^[A-Za-z\s]+$/;
+            if (name !== null && name.trim() !== "") {
+                if (!namePattern.test(name)) {
+                    document.getElementById('nameMessage').innerText = 'Invalid name!';
+                    nameVal = false;
+                } else {
+                    document.getElementById('nameMessage').innerText = '';
+                    nameVal = true;
+                }
+            } else {
+                document.getElementById('nameMessage').innerText = 'Please enter name!';
+                nameVal = false;
+            }
+
+            // MFG Date Validation
+            var mfgDate = document.getElementById('mfgDate').value;
+            var dateVal = false;
+            if (mfgDate !== null && mfgDate.trim() !== "") {
+                var currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+                if (mfgDate > currentDate) {
+                    document.getElementById('dateMessage').innerText = 'Invalid date!';
+                    dateVal = false;
+                } else {
+                    document.getElementById('dateMessage').innerText = '';
+                    dateVal = true;
+                }
+            } else {
+                document.getElementById('dateMessage').innerText = 'Please enter date!';
+                dateVal = false;
+            }
+
+            // Model Number Validation
+            var modelNo = document.getElementById('modelNo').value;
+            var mnVal = false;
+            if (modelNo !== null && modelNo.trim() !== "") {
+                document.getElementById('mnMessage').innerText = '';
+                mnVal = true;
+            } else {
+                document.getElementById('mnMessage').innerText = 'Please enter model number!';
+                mnVal = false;
+            }
+
+            // Finalizer Name Validation
+            var fname = document.getElementById('finalizerName').value;
+            var fnameVal = false;
+            if (fname !== null && fname.trim() !== "") {
+                if (!namePattern.test(fname)) {
+                    document.getElementById('fnameMessage').innerText = 'Invalid finalizer name!';
+                    fnameVal = false;
+                } else {
+                    document.getElementById('fnameMessage').innerText = '';
+                    fnameVal = true;
+                }
+            } else {
+                document.getElementById('fnameMessage').innerText = 'Please enter finalizer name!';
+                fnameVal = false;
+            }
+            
+            // Country Validation
+            var countryname = document.getElementById('countrySelect').value;
+            var countrynameVal = false;
+            if (countryname !== null && countryname.trim() !== "") {
+                document.getElementById('countryMessage').innerText = '';
+                countrynameVal = true;
+            } else {
+                document.getElementById('countryMessage').innerText = 'Please select country name!';
+                countrynameVal = false;
+            }
+            
+            // State Validation
+            var statename = document.getElementById('stateSelect').value;
+            var statenameVal = false;
+            if (statename !== null && statename.trim() !== "") {
+                document.getElementById('stateMessage').innerText = '';
+                statenameVal = true;
+            } else {
+                document.getElementById('stateMessage').innerText = 'Please select state name!';
+                statenameVal = false;
+            }
+            
+            // City Validation
+            var cityname = document.getElementById('citySelect').value;
+            var citynameVal = false;
+            if (cityname !== null && cityname.trim() !== "") {
+                document.getElementById('cityMessage').innerText = '';
+                citynameVal = true;
+            } else {
+                document.getElementById('cityMessage').innerText = 'Please select city name!';
+                citynameVal = false;
+            }
+
+            // Submit Form
+            if (nameVal && dateVal && mnVal && fnameVal && countrynameVal && statenameVal && citynameVal) {
+                console.log("Form is valid. Submitting...");
+                form.submit();
+            } else {
+                console.log("Form is invalid. Please correct the errors.");
+            }
+        }
+        
+        // Handle state and city fetching via AJAX
+
+        // Fetch states when country changes
+        document.getElementById('countrySelect').addEventListener('change', onCountryChange);
+        
+        function onCountryChange(event) {
+            const countryName = event.target.value;
+            console.log("Country Name:", countryName);
+
+            fetch(`/user/getState/${countryName}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            }).then(data => {
+                console.log("States response:", data);
+
+                const stateSelect = document.getElementById('stateSelect');
+                stateSelect.innerHTML = '<option value="">Select a State</option>'; // Clear previous states
+                
+                data.forEach(state => {
+                    const option = document.createElement('option');
+                    option.value = state.stateName; // Assuming your state object has a stateId property
+                    option.textContent = state.stateName; // Assuming your state object has a stateName property
+                    stateSelect.appendChild(option);
+                });
+
+                stateSelect.disabled = false; // Enable the state select dropdown
+            }).catch(error => {
+                console.error("Error fetching states:", error);
+            });
+        }
+
+        // Fetch cities when state changes
+        document.getElementById('stateSelect').addEventListener('change', onStateChange);
+
+        function onStateChange(event) {
+            const stateName = event.target.value;
+            console.log("State Name:", stateName);
+
+            fetch(`/user/getCity/${stateName}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            }).then(data => {
+                console.log("Cities response:", data);
+
+                const citySelect = document.getElementById('citySelect');
+                citySelect.innerHTML = '<option value="">Select a City</option>'; // Clear previous cities
+
+                data.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.cityName; // Assuming your city object has a cityId property
+                    option.textContent = city.cityName; // Assuming your city object has a cityName property
+                    citySelect.appendChild(option);
+                });
+
+                citySelect.disabled = false; // Enable the city select dropdown
+            }).catch(error => {
+                console.error("Error fetching cities:", error);
+            });
+        }
+        </script>
+	</section>
+</body>
+</html>

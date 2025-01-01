@@ -1,0 +1,421 @@
+
+ <!doctype html>
+<html lang="en" xmln:th="http://www.thymeLeaf.org" th:fragment="Layout(content)">
+
+
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="Layout(content)">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+    
+    <script src="" th:src="@{/js/script.js}"></script>
+    <script src="" th:src="@{/js/SearchHandlerFunction.js}" defer></script>
+    <script src="" th:src="@{/js/coworkerstudent.js}"></script>
+
+    <title th:text="${title}">Hello, world!</title>
+</head>
+
+<body>
+    <section>
+        <div class="container-fluid h-100">
+            <div class="row h-100">
+                <div class="col-2">
+					<div class="sidebar mt-8">
+						<!-- Sidebar content -->
+						<span onclick="toggleSidebar()" class="crossBtn">&times;</span> <a
+							href="#" th:href="@{/user/index}" class="item"> <img
+							th:src="@{'/icons/whitehouse.jpeg'}" style="width: 16px;">
+							Home Dashboard
+						</a> <a href="#" th:href="@{/user/show_contact/0}" class="item"> <img
+							th:src="@{'/icons/viewcontact1.jpg'}" style="width: 16px;">
+							<i class="fa fa-address-book-o" aria-hidden="true"></i> Contacts
+						</a> <a href="#" th:href="@{/user/show_student/0}" class="item"> <i
+							class="fa fa-graduation-cap" aria-hidden="true"></i> Students
+						</a> <a href="#" th:href="@{/user/show_employee/0}" class="item">
+							<i class="fa fa-desktop" aria-hidden="true"></i> Employees
+						</a> <a href="#" th:href="@{/user/show_customer/0}" class="item">
+							<i class="fa fa-users" aria-hidden="true"></i> Customers
+						</a> <a href="#" th:href="@{/user/show_vendor/0}" class="item"> <i
+							class="fa fa-suitcase" aria-hidden="true"></i> Vendors
+						</a> <a href="#" th:href="@{/user/show_coworker/0}" class="item">
+							<i class="fa fa-briefcase" aria-hidden="true"></i> Coworkers
+						</a><a href="#" th:href="@{/user/showProduct}" class="item">
+
+				         <i class="fa fa-calculator" aria-hidden="true"></i> Products</a>
+
+
+						<a href="#" th:href="@{/user/bcaStudentList/0}" class="item">
+							BcaStudent </a> <a href="#" th:href="@{/user/profile}" class="item">
+							<i class="fa fa-user-circle" aria-hidden="true"></i> Your Profile
+						</a> <a href="#" th:href="@{/user/getMap}" class="item"> <i
+							class="fa fa-map" aria-hidden="true"></i> Map
+						</a>
+
+
+
+						
+
+             <a href="#" th:href="@{/user/changePassword}" class="item"> <i
+
+							class="fa fa-cog" aria-hidden="true"></i> Setting
+						</a> <a href="#" id="toggleNotifications" class="item"
+							onclick="toggleNotifications()"> <i class="fa fa-bell"
+							aria-hidden="true"></i> Notifications <span
+							id="notificationStatus" style="color: green;">Enabled</span>
+						</a>
+						<button type="button" class=" btn-reminder item" data-toggle="modal"
+							data-target="#setReminderModal">Set Reminder</button>
+
+						
+
+						<div class="dividers"></div>
+					</div>
+				</div>
+
+                <div class="col-10" style="padding: 0;">
+                    <!-- Navbar content -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="setReminderModal" tabindex="-1" aria-labelledby="setReminderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="setReminderModalLabel">Set a Reminder</h5>
+            </div>
+            <div class="modal-body">
+                <form id="reminderForm">
+                    <div class="form-group">
+                        <label for="reminderMessage">Reminder Message</label>
+                        <input type="text" class="form-control" id="reminderMessage" placeholder="Enter your reminder">
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderDate">Date</label>
+                        <input type="date" class="form-control" id="reminderDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderTime">Time</label>
+                        <input type="time" class="form-control" id="reminderTime">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="setReminder()">Set Reminder</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <div class="modal fade" id="insertAlertModal" tabindex="-1" aria-labelledby="insertAlertModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="insertAlertModalLabel">Reminder</h5>
+                    </div>
+                    <div class="modal-body">
+                        Please insert a new record.
+                    </div>
+                    <div class="modal-footer">
+                        <a id="closeLink" href="#" class="btn btn-primary">Close</a>
+                        <a id="insertRecordLink" href="#" class="btn btn-primary">Insert Record</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="reminderModal" tabindex="-1" aria-labelledby="reminderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reminderModalLabel">Reminder</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="reminderMessageContent">
+                <!-- Reminder message will be dynamically added here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Content area -->
+        <div class="content mt-0" style="margin-top:2px; height: 100%;">
+            <nav class="navbar navbar-expand-lg" style="max-width: 100%; height: 50px; background: #7900d2;">
+                <a class="navbar-brand" style="color: white;" href="#">
+                    <i onclick="toggleSidebar()" class="fas fa-bars m-3"></i>
+                </a>
+                <span th:text="${heading}" style="color: white;"></span>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" style="color: white;" th:href="@{/home}">Home</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" style="color: white;" href="#">
+                                <span th:text="${user.name}"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" style="color: white;" th:href="@{/logout}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+
+            <div th:replace="${content}"></div>
+        </div>
+
+        <!-- Optional JavaScript; choose one of the two! -->
+        <!-- jQuery and Bootstrap Bundle -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+        <script>
+        let notificationInterval;  // Variable to store the interval ID
+          // Variable to store the interval ID
+
+        function startNotifications() {
+            // Only start notifications if they are enabled and no existing interval is running
+            if (localStorage.getItem('notificationsEnabled') === 'true' && !notificationInterval) {
+                // Set an interval to check for reminders every minute (60000 milliseconds)
+                notificationInterval = setInterval(loadReminders, 60000);
+            }
+        }
+        function toggleNotifications() {
+            let notificationStatus = localStorage.getItem('notificationsEnabled');
+
+            // Toggle the status
+            if (notificationStatus === 'true') {
+                localStorage.setItem('notificationsEnabled', 'false');
+                document.getElementById('notificationStatus').innerText = 'Disabled';
+                document.getElementById('notificationStatus').style.color = 'red';
+                stopNotifications(); // Stop notifications
+            } else {
+                localStorage.setItem('notificationsEnabled', 'true');
+                document.getElementById('notificationStatus').innerText = 'Enabled';
+                document.getElementById('notificationStatus').style.color = 'green';
+                startNotifications(); // Start notifications
+            }
+        }
+
+        function startNotifications() {
+            // Only start notifications if they are enabled and no existing interval is running
+            if (localStorage.getItem('notificationsEnabled') === 'true' && !notificationInterval) {
+                // Set an interval to show the alert every minute (60000 milliseconds)
+                notificationInterval = setInterval(showInsertAlertOnDifferentPages, 60000);
+            }
+        }
+       
+
+        function stopNotifications() {
+            // Clear the interval if it exists
+            if (notificationInterval) {
+                clearInterval(notificationInterval);
+                notificationInterval = null; // Reset the variable to indicate no interval is running
+            }
+        }
+
+        function checkNotificationStatus() {
+            let notificationStatus = localStorage.getItem('notificationsEnabled');
+
+            // Set initial status based on localStorage
+            if (notificationStatus === 'false') {
+                document.getElementById('notificationStatus').innerText = 'Disabled';
+                document.getElementById('notificationStatus').style.color = 'red';
+            } else {
+                document.getElementById('notificationStatus').innerText = 'Enabled';
+                document.getElementById('notificationStatus').style.color = 'green';
+                startNotifications(); // Start notifications only if enabled
+            }
+        }
+
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            checkNotificationStatus();
+        });
+
+        function showInsertAlertOnDifferentPages() {
+            // Check if notifications are enabled before showing the modal
+            if (localStorage.getItem('notificationsEnabled') !== 'true') {
+                return; // Do nothing if notifications are disabled
+            }
+
+            var currentURL = window.location.href;
+
+            // Define URL patterns for different pages
+            var bcaStudentURL = "/user/bcaStudentList/0";
+            var contactURL = "/user/show_contact/0";
+            var studentURL = "/user/show_student/0";
+            var employeeURL = "/user/show_employee/0";
+            var customerURL = "/user/show_customer/0";
+            var vendorURL = "/user/show_vendor/0";
+            var coworkerURL = "/user/show_coworker/0";
+
+            var insertLink = "";
+            var closeLink = "";
+
+            // Check the current URL and set the appropriate links for the modal
+            if (currentURL.includes(bcaStudentURL)) {
+                insertLink = "/user/BcaStudent";
+                closeLink = "/user/bcaStudentList/0";
+            } else if (currentURL.includes(contactURL)) {
+                insertLink = "/user/add_contact";
+                closeLink = "/user/show_contact/0";
+            } else if (currentURL.includes(studentURL)) {
+                insertLink = "/user/addstudent";
+                closeLink = "/user/show_student/0";
+            } else if (currentURL.includes(employeeURL)) {
+                insertLink = "/user/addemployee";
+                closeLink = "/user/show_employee/0";
+            } else if (currentURL.includes(customerURL)) {
+                insertLink = "/user/add_customer";
+                closeLink = "/user/show_customer/0";
+            } else if (currentURL.includes(vendorURL)) {
+                insertLink = "/user/addvendor";
+                closeLink = "/user/show_vendor/0";
+            } else if (currentURL.includes(coworkerURL)) {
+                insertLink = "/user/addcoworker";
+                closeLink = "/user/show_coworker/0";
+            }
+
+            // Show the modal if URL is matched and notifications are enabled
+            if (insertLink && closeLink) {
+                // Update modal buttons dynamically
+                document.getElementById("insertRecordLink").setAttribute("href", insertLink);
+                document.getElementById("closeLink").setAttribute("href", closeLink);
+
+                // Show the modal
+                var myModal = new bootstrap.Modal(document.getElementById('insertAlertModal'));
+                myModal.show();
+            }
+        }
+        function setReminder() {
+            const message = document.getElementById('reminderMessage').value;
+            const date = document.getElementById('reminderDate').value;
+            const time = document.getElementById('reminderTime').value;
+
+            const reminderData = {
+                message: message,
+                dateTime: new Date(`${date}T${time}`)
+            };
+
+            fetch('/user/addReminder', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(reminderData)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Reminder saved!");
+                    $('#setReminderModal').modal('hide');
+                }
+            }).catch(error => console.error('Error:', error));
+        }
+        $('#setReminderModal').on('shown.bs.modal', function () {
+            document.getElementById('reminderForm').reset();
+        });
+        let reminderQueue = []; // Queue to hold reminders
+        let isReminderShowing = false; // Flag to track if a reminder is currently displayed
+
+        function loadReminders() {
+            fetch('/user/getRemindersDue')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to fetch reminders');
+                    return response.json();
+                })
+                .then(reminders => {
+                    if (reminders.length > 0) {
+                        // Check if new reminders are due
+                        const dueReminders = reminders.map(reminder => ({
+                            message: reminder.message,
+                            reminderDateTime: new Date(reminder.dateTime).getTime()
+                        }));
+
+                        // Save all due reminders to localStorage
+                        localStorage.setItem('reminders', JSON.stringify(dueReminders));
+                        startReminderCheck(); // Check if there are any reminders to display
+                    }
+                })
+                .catch(error => console.error('Error fetching reminders:', error));
+        }
+
+        function startReminderCheck() {
+            const reminders = JSON.parse(localStorage.getItem('reminders'));
+
+            if (reminders && reminders.length > 0) {
+                const currentTime = new Date().getTime();
+
+                // Get all reminders that are due at the current time
+                const dueReminders = reminders.filter(reminder => currentTime >= reminder.reminderDateTime);
+                
+                // Add due reminders to the queue
+                dueReminders.forEach(reminder => reminderQueue.push(reminder.message));
+
+                // Filter out displayed reminders and keep only those not yet due
+                const remainingReminders = reminders.filter(reminder => currentTime < reminder.reminderDateTime);
+
+                // Check if there are any reminders to show and if one isn't already being shown
+                if (reminderQueue.length > 0 && !isReminderShowing) {
+                    showReminder(reminderQueue.shift()); // Show the next reminder
+                }
+
+                if (remainingReminders.length > 0) {
+                    // Find the next closest reminder time and set an exact timeout
+                    const nextReminderTime = Math.min(...remainingReminders.map(rem => rem.reminderDateTime));
+                    const delay = nextReminderTime - currentTime;
+
+                    localStorage.setItem('reminders', JSON.stringify(remainingReminders));
+                    setTimeout(startReminderCheck, delay); // Check exactly when the next reminder is due
+                } else {
+                    localStorage.removeItem('reminders');
+                }
+            }
+        }
+
+        // Function to display the reminder in the modal
+        function showReminder(message) {
+            isReminderShowing = true; // Set flag to indicate a reminder is currently displayed
+            document.getElementById('reminderMessageContent').innerText = message;
+            $('#reminderModal').modal('show');
+
+            // Set a timeout to automatically hide the modal and show the next reminder
+            setTimeout(() => {
+                $('#reminderModal').modal('hide');
+                isReminderShowing = false; // Reset the flag after hiding
+                if (reminderQueue.length > 0) {
+                    showReminder(reminderQueue.shift()); // Show the next reminder if available
+                }
+            }, 5000); // Display each reminder for 5 seconds
+        }
+
+        // Run immediately and set to repeat every minute
+        loadReminders();
+        setInterval(loadReminders, 60000);
+    </script>
+    </section>
+</body>
+</html>
