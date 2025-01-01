@@ -16,7 +16,7 @@
               listen 80 default_server;
               listen [::]:80 default_server;
               root /var/www/html;
-              server_name raigdkaragro.com www.raigdkaragro.com;
+              server_name 13.126.122.36;
 
               location / {
                   # Dynamically route to the active deployment container
