@@ -45,6 +45,14 @@
               location ~ /\.(ht|HT) {
                   deny all;
               }
+              
+              # Expose NGINX status for Prometheus metrics
+              location /nginx_status {
+                  stub_status on;
+                  access_log off;
+                  allow 3.110.130.211;  # Allow Prometheus to access NGINX status on EC2 IP
+                  deny all;  # Deny external access
+            }
           }
         dest: /etc/nginx/sites-available/default
       notify:
