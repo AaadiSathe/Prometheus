@@ -36,20 +36,13 @@
           }
         dest: /etc/nginx/sites-available/default
       notify:
-        - restart nginx
+        - reload nginx
 
     - name: Test NGINX configuration
       command: nginx -t
       register: nginx_test
       failed_when: nginx_test.rc != 0
 
-    - name: Restart NGINX
-      service:
-        name: nginx
-        state: restarted
-
   handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted
+    - name: reload nginx
+      command: nginx -s reload
